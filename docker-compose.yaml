@@ -1,16 +1,39 @@
-services:
+﻿services:
   server:
     build:
       context: .
       dockerfile: docker/nginx/Dockerfile
     ports:
-      - "8080:80"
+      - "${APP_PORT:-8080}:80"
     volumes:
-      - .:/app
+      - .:/app/
+    links:
+      - php
     depends_on:
       - php
     networks:
-      - app-network
+      - pg-network
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - pg-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./docker/db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   php:
     build:
@@ -18,8 +41,42 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
-      - app-network
+      - pg-network
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - pg-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "${MAILPIT_PORT:-8025}:8025"
+    networks:
+      - pg-network
+
+  pgadmin-wdpai:
+    image: dpage/pgadmin4:latest
+    container_name: ${PGADMIN_CONTAINER_NAME:-pg-admin}
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - pg-network
 
 networks:
-  app-network:
+  pg-network:
+
+volumes:
+  pg-data:
+  ollama_data:
