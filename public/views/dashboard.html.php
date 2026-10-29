@@ -1,3 +1,5 @@
+<?php require __DIR__ . '/partials/head.html.php'; ?>
+
 <header class="site-header site-header--app">
     <a class="site-logo" href="/">MaturaKorki</a>
 
@@ -107,3 +109,5 @@
     </nav>
     <p><small>&copy; 2026 MaturaKorki. Projekt studencki.</small></p>
 </footer>
+
+<?php require __DIR__ . '/partials/foot.html.php'; ?>
