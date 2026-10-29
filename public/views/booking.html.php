@@ -1,3 +1,5 @@
+<?php require __DIR__ . '/partials/head.html.php'; ?>
+
 <header class="site-header site-header--minimal">
     <a class="site-logo" href="/">MaturaKorki</a>
     <a href="/tutors/<?= (int) $tutor['id'] ?>">← Wróć do profilu</a>
@@ -84,3 +86,5 @@
 <footer class="site-footer site-footer--minimal">
     <p><small>&copy; 2026 MaturaKorki. Projekt studencki.</small></p>
 </footer>
+
+<?php require __DIR__ . '/partials/foot.html.php'; ?>

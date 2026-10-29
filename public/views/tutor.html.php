@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/partials/head.html.php'; ?>
 <?php require __DIR__ . '/partials/header.html.php'; ?>
 
 <main>
@@ -132,3 +133,4 @@
 </main>
 
 <?php require __DIR__ . '/partials/footer.html.php'; ?>
+<?php require __DIR__ . '/partials/foot.html.php'; ?>
