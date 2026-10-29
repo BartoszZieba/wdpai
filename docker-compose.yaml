@@ -47,8 +47,11 @@ services:
     networks:
       - pg-network
 
+  # Ollama jest opcjonalna (profil "ai") - domyślnie nie jest pobierana ani uruchamiana.
   ollama:
     image: ollama/ollama:latest
+    profiles:
+      - ai
     ports:
       - "11434:11434"
     volumes:
