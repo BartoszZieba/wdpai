@@ -17,4 +17,9 @@ abstract class AppController
         extract($variables, EXTR_SKIP);
         require $templatePath;
     }
+
+    protected function e(string $value): string
+    {
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
 }

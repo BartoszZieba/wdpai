@@ -2,18 +2,22 @@
 
 declare(strict_types=1);
 
+use App\Controller\BookingController;
+use App\Controller\DashboardController;
 use App\Controller\DefaultController;
-use App\Controller\ProjectController;
+use App\Controller\TutorController;
 use App\Routing;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 $routing = new Routing();
 
-// TU BĘDZIEMY DEFINIOWAĆ WSZYSTKIE TRASY WYSTĘPUJĄCE W NASZYM PROJEKCIE
-$routing->get('/projects', ProjectController::class, 'index');
-$routing->get('/projects/{id}', ProjectController::class, 'show');
+// Publiczne widoki projektu.
 $routing->get('/', DefaultController::class, 'index');
+$routing->get('/tutors', TutorController::class, 'index');
+$routing->get('/tutors/{id}', TutorController::class, 'show');
+$routing->get('/booking', BookingController::class, 'index');
+$routing->get('/dashboard', DashboardController::class, 'index');
 
 $routeFound = $routing->dispatch(
     $_SERVER['REQUEST_METHOD'],
