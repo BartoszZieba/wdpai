@@ -4,4 +4,4 @@
 .DS_Store
 vendor/
 node_modules/
-docker/data/.env
+docker/data/
