@@ -10,6 +10,7 @@ $variant = $navVariant ?? 'public';
     <?php else: ?>
         <a href="/#jak-to-dziala">Jak to działa</a>
         <a href="/tutors">Korepetytorzy</a>
+        <a href="/dashboard">Moje lekcje</a>
         <a href="/#dla-korepetytorow">Dla korepetytorów</a>
     <?php endif; ?>
 </nav>
