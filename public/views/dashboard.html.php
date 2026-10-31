@@ -3,10 +3,7 @@
 <header class="site-header site-header--app">
     <a class="site-logo" href="/">MaturaKorki</a>
 
-    <nav aria-label="Nawigacja aplikacji">
-        <a href="/tutors">Szukaj</a>
-        <a href="/dashboard" aria-current="page">Moje lekcje</a>
-    </nav>
+    <?php $navVariant = 'app'; require __DIR__ . '/partials/nav.html.php'; ?>
 
     <p class="avatar" aria-label="Konto Zosi">Z</p>
 </header>

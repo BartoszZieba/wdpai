@@ -2,7 +2,7 @@
 
 <header class="site-header site-header--minimal">
     <a class="site-logo" href="/">MaturaKorki</a>
-    <a href="/tutors/<?= (int) $tutor['id'] ?>">← Wróć do profilu</a>
+    <?php $navVariant = 'minimal'; require __DIR__ . '/partials/nav.html.php'; ?>
 </header>
 
 <main>

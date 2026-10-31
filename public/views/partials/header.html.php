@@ -1,11 +1,7 @@
 <header class="site-header">
     <a class="site-logo" href="/">MaturaKorki</a>
 
-    <nav aria-label="Nawigacja główna">
-        <a href="/#jak-to-dziala">Jak to działa</a>
-        <a href="/tutors">Korepetytorzy</a>
-        <a href="/#dla-korepetytorow">Dla korepetytorów</a>
-    </nav>
+    <?php require __DIR__ . '/nav.html.php'; ?>
 
     <div class="site-header__actions">
         <a href="#">Zaloguj się</a>
