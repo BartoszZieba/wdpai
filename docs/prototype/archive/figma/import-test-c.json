@@ -1,0 +1,12 @@
+[
+  {
+    "name": "test/red",
+    "type": "COLOR",
+    "value": "#FF0000"
+  },
+  {
+    "name": "test/space",
+    "type": "FLOAT",
+    "value": 4
+  }
+]
