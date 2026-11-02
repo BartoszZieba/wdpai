@@ -1,0 +1,24 @@
+{
+  "test": {
+    "red": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "alpha": 1.0,
+        "hex": "#FF0000"
+      }
+    },
+    "space": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    }
+  }
+}

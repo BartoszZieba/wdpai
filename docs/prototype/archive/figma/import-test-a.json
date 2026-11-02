@@ -1,0 +1,20 @@
+{
+  "collections": [
+    {
+      "name": "Test",
+      "modes": ["Light"],
+      "variables": [
+        {
+          "name": "test/red",
+          "type": "COLOR",
+          "valuesByMode": { "Light": "#FF0000" }
+        },
+        {
+          "name": "test/space",
+          "type": "FLOAT",
+          "valuesByMode": { "Light": 4 }
+        }
+      ]
+    }
+  ]
+}
