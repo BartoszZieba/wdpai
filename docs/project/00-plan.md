@@ -68,8 +68,8 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | 13 | PHP | ✅ | typy, `strict_types`, brak warningów |
 | 14 | JavaScript | ❌ | brak |
 | 15 | Fetch API | ❌ | brak |
-| 16 | Design | ❌ | brak CSS |
-| 17 | Responsywność | ❌ | brak CSS |
+| 16 | Design | 🟡 | CSS gotowy na `feature/lab3-css`; czeka na merge |
+| 17 | Responsywność | 🟡 | 360/390/768/1280 bez poziomego scrolla; czeka na merge |
 | 18 | Dark/light | ❌ | brak |
 | 19 | WCAG | ❌ | brak raportu |
 | 20 | Logowanie | ❌ | brak |
@@ -266,13 +266,15 @@ Dodatki pod kryteria:
 
 Kryteria: 16, 17; Lab 3: 7 punktów.
 
-- [ ] `public/css/style.css` z tokenami `:root` (min. 8 zmiennych).
-- [ ] Typografia, kolory, spacing, border, radius, shadows.
-- [ ] Layout S1 na Flexbox/Grid.
-- [ ] Breakpoint 768/1024 + test 360/390/768/1280.
-- [ ] `:hover`, `:focus-visible`, `prefers-reduced-motion`.
-- [ ] Podłączyć CSS do wszystkich widoków.
-- [ ] Małe commity: tokens → layout → components → responsive.
+- [x] `public/css/style.css` z tokenami `:root` (min. 8 zmiennych).
+- [x] Typografia, kolory, spacing, border, radius, shadows.
+- [x] Layout S1 na Flexbox/Grid.
+- [x] Breakpoint 768/1024 + test 360/390/768/1280.
+- [x] `:hover`, `:focus-visible`, `prefers-reduced-motion`.
+- [x] Podłączyć CSS do wszystkich widoków.
+- [x] Małe commity: tokens → layout → components → responsive.
+
+Status: gotowe na branchu `feature/lab3-css`; commity `39a5804`, `d60ddc8`, `9130e2f`, `a98f014`, `6ff189b`. Szczegóły: `docs/project/03-lab3-css.md`. Merge dopiero po akceptacji użytkownika.
 
 ### P2 — Lab 6/7/8: PHP, PostgreSQL, OOP
 
