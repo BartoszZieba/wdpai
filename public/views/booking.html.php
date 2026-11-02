@@ -5,7 +5,7 @@
     <?php $navVariant = 'minimal'; require __DIR__ . '/partials/nav.html.php'; ?>
 </header>
 
-<main>
+<main class="booking-page">
     <ol class="stepper" aria-label="Kroki rezerwacji">
         <li aria-current="step">1. Termin</li>
         <li>2. Dane</li>

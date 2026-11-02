@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/partials/head.html.php'; ?>
 <?php require __DIR__ . '/partials/header.html.php'; ?>
 
-<main>
+<main class="tutor-page">
     <nav aria-label="Ścieżka nawigacji">
         <ol>
             <li><a href="/tutors">Korepetytorzy</a></li>

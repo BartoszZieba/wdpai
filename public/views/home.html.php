@@ -1,8 +1,11 @@
 <?php require __DIR__ . '/partials/head.html.php'; ?>
 <?php require __DIR__ . '/partials/header.html.php'; ?>
 
-<main>
+<?php $heroTutor = $featuredTutors[0] ?? null; ?>
+
+<main class="home">
     <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__content">
         <p class="eyebrow">Matematyka do matury · podstawa i rozszerzenie</p>
         <h1 id="hero-title">Ogarnij maturę z matematyki z korepetytorem, który zna Twój dział.</h1>
         <p class="hero__lead">
@@ -35,6 +38,39 @@
         </form>
 
         <p class="hero__note">Online, w terminach, które Ci pasują.</p>
+        </div>
+
+        <?php if ($heroTutor !== null): ?>
+            <aside class="hero-card" aria-label="Przykładowy profil korepetytora">
+                <div class="hero-card__top">
+                    <p class="avatar" aria-hidden="true"><?= $this->e($heroTutor['initials']) ?></p>
+                    <div class="hero-card__identity">
+                        <p class="hero-card__name">
+                            <a href="/tutors/<?= (int) $heroTutor['id'] ?>"><?= $this->e($heroTutor['name']) ?></a>
+                        </p>
+                        <p class="hero-card__meta">
+                            <?= $this->e($heroTutor['level']) ?> · <?= (int) $heroTutor['price'] ?> zł/h
+                        </p>
+                    </div>
+                    <p class="rating">
+                        <span aria-hidden="true">★</span>
+                        <?= $this->e((string) $heroTutor['rating']) ?>
+                    </p>
+                </div>
+
+                <p class="hero-card__topic"><?= $this->e($heroTutor['topics'][0] ?? '') ?></p>
+
+                <ul class="hero-card__slots" aria-label="Najbliższe terminy">
+                    <?php foreach (array_slice($heroTutor['slots'], 0, 2) as $slot): ?>
+                        <li><?= $this->e($slot) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+
+                <a class="hero-card__link" href="/tutors/<?= (int) $heroTutor['id'] ?>">
+                    Zobacz profil <span aria-hidden="true">→</span>
+                </a>
+            </aside>
+        <?php endif; ?>
     </section>
 
     <section class="trust" aria-label="Zaufanie">
