@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/partials/head.html.php'; ?>
 <?php require __DIR__ . '/partials/header.html.php'; ?>
 
-<main>
+<main class="tutors-page">
     <nav aria-label="Ścieżka nawigacji">
         <ol>
             <li><a href="/">Strona główna</a></li>
@@ -9,7 +9,7 @@
         </ol>
     </nav>
 
-    <header>
+    <header class="page-header">
         <h1>Korepetytorzy z matematyki do matury</h1>
         <p><?= (int) $resultCount ?> profili · online · podstawa i rozszerzenie</p>
     </header>
@@ -65,7 +65,7 @@
         </ul>
     <?php endif; ?>
 
-    <p><strong>Znaleziono <?= (int) $resultCount ?> korepetytorów</strong></p>
+    <p class="results-count"><strong>Znaleziono <?= (int) $resultCount ?> korepetytorów</strong></p>
 
     <?php if ($tutors === []): ?>
         <section aria-labelledby="empty-title">

@@ -8,7 +8,7 @@
     <p class="avatar" aria-label="Konto Zosi">Z</p>
 </header>
 
-<main>
+<main class="dashboard-page">
     <h1>Moje lekcje</h1>
     <p>Zarządzaj rezerwacjami i opiniami.</p>
 
@@ -51,7 +51,7 @@
                         </header>
 
                         <p><?= (int) $lesson['price'] ?> zł</p>
-                        <p><strong><?= $this->e($lesson['status_label']) ?></strong></p>
+                        <p><strong class="status status--<?= $this->e($lesson['status']) ?>"><?= $this->e($lesson['status_label']) ?></strong></p>
 
                         <footer>
                             <?php if ($lesson['can_cancel']): ?>
