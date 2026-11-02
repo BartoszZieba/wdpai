@@ -4,7 +4,7 @@ Projekt zaliczeniowy z przedmiotu **Projektowanie Aplikacji Internetowych (WDPAI
 
 Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematyki. Pozwala filtrować profile po poziomie i dziale, sprawdzić opinie, zarezerwować termin i zarządzać lekcjami w panelu ucznia.
 
-> Etap Lab 2: statyczny prototyp (PDF) oraz semantyczne widoki HTML z danymi z kontrolerów. Baza danych, logowanie i CSS pojawią się w kolejnych laboratoriach.
+> Etap Lab 3: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów oraz responsywny arkusz CSS (`public/css/style.css`). Baza danych i logowanie pojawią się w kolejnych laboratoriach.
 
 ## Funkcje
 
@@ -26,6 +26,7 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Baza danych | PostgreSQL 16 (planowana w kolejnych labach) |
 | Konteneryzacja | Docker Compose |
 | Autoloading | Composer (PSR-4) |
+| Stylowanie | CSS: custom properties, Flexbox, Grid, mobile-first |
 | Narzędzia | Mailpit, pgAdmin, Ollama (profil `ai`) |
 
 ## Wymagania i szybki start
@@ -66,6 +67,7 @@ Aplikacja: http://localhost:8080
 ├── docker-compose.yaml
 ├── docker/                # obrazy nginx, PHP, PostgreSQL
 ├── public/                # jedyny publiczny katalog (front controller)
+│   ├── css/style.css      # tokeny, komponenty, widoki, RWD
 │   ├── index.php
 │   └── views/             # szablony .html.php + partials/
 └── src/
@@ -108,7 +110,7 @@ Wszystkie sekrety i parametry środowiska trzymamy w `.env` (ignorowanym przez G
 
 ## API i testy
 
-Na obecnym etapie brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, bez CSS (stylowanie w Lab 3).
+Na obecnym etapie brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, a stylowanie znajduje się w `public/css/style.css`.
 
 ## Autorzy
 
