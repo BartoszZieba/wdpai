@@ -6,27 +6,27 @@ Wniosek ogólny: **kierunek Paper & Ink jest spójny i nadaje się do implementa
 
 ## 1. Pliki i wymiary
 
-| Ekran | PNG | Wymiary | Uwaga |
-|---|---|---:|---|
-| S1 landing | `Strona Główna — MaturaKorki.png` | 1280×3074 | OK |
-| S2 wyniki | `Wyniki Wyszukiwania — MaturaKorki.png` | 1280×1538 | OK |
-| S3 profil | `Profil Korepetytora — Michał K..png` | 1280×2418 | OK |
-| S4 rezerwacja | `Rezerwacja Lekcji — MaturaKorki.png` | **1296×1252** | zła szerokość i tło |
-| S5 panel | `Moje lekcje — MaturaKorki.png` | **1296×1047** | zła szerokość |
-| S1 mobile | `Strona Główna (Mobile) — MaturaKorki.png` | **788×8350** | 394 px @2x |
-| S2 mobile | `Wyniki Wyszukiwania (Mobile) — MaturaKorki.png` | **812×4482** | 406 px @2x, overflow |
-| S3 mobile | `Profil Korepetytora (Mobile) — Michał K..png` | **812×3998** | 406 px @2x |
-| S4 mobile | `Rezerwacja Lekcji (Mobile) — MaturaKorki.png` | **812×1782** | 406 px @2x, clipping |
-| S5 mobile | `Moje lekcje (Mobile) — MaturaKorki.png` | **812×2302** | 406 px @2x |
+| Ekran | Frame w Figmie | PNG | Uwaga |
+|---|---:|---:|---|
+| S1 landing | 1280×3073,5 | 1280×3074 | OK |
+| S2 wyniki | 1280×1538 | 1280×1538 | OK |
+| S3 profil | 1280×2417,25 | 1280×2418 | OK |
+| S4 rezerwacja | 1280×1245 | 1296×1252 | PNG zawiera cień; tło poprawione |
+| S5 panel | 1280×1040 | 1296×1047 | PNG zawiera cień |
+| S1 mobile | 390×4174 | 788×8350 (394×4175 @2x) | PNG zawiera cień |
+| S2 mobile | 390×2225 | 812×4482 (406×2241 @2x) | PNG zawiera cień; chipsy w scrollu |
+| S3 mobile | 390×1992 | 812×3998 (406×1999 @2x) | PNG zawiera cień |
+| S4 mobile | 390×884 | 812×1782 (406×891 @2x) | PNG zawiera cień; dni do dokończenia |
+| S5 mobile | 390×1144 | 812×2302 (406×1151 @2x) | PNG zawiera cień |
 
-Standard do przyjęcia: **desktop 1280 px, mobile 390 px** (zgodnie z `DESIGN.md` i większością frame’ów). PNG mobile przy 2x powinny mieć 780 px, nie 788/812.
+**Ważne:** frame’y w Figmie mają już poprawne **1280 / 390 px**. Wcześniejsza ocena „1296/406 to zła szerokość” była błędna — PNG są o 8 px szersze, bo Figma eksportuje efekt/cień poza frame. **Nie zmieniaj frame’ów na 1296/406.** Do czystego PDF eksportuj z przycięciem albo przytnij 8 px z każdej strony.
 
 ## 2. PDF
 
 - 10 stron, 38 972 KB, poniżej limitu 100 MB.
 - Kolejność stron: **S1 D, S3 D, S2 D, S4 D, S5 D, S1 M, S3 M, S2 M, S4 M, S5 M**.
 - S2 i S3 są zamienione; kolejność powinna być S1 → S2 → S3 → S4 → S5.
-- Szerokości stron: 1280, 1280, 1280, 1296, 1296, 394, 406, 406, 406, 406.
+- Szerokości stron wynikają z eksportu z cieniem: 1280, 1280, 1280, 1296, 1296, 394, 406, 406, 406, 406; frame’y źródłowe to 1280/390.
 - Po poprawkach w Figmie wyeksportować ponownie w kolejności S1–S5 (najpierw wszystkie desktop, potem wszystkie mobile albo naprzemiennie — ważna jest kolejność w PDF).
 
 ## 3. Typografia i akcent
@@ -45,21 +45,21 @@ Standard do przyjęcia: **desktop 1280 px, mobile 390 px** (zgodnie z `DESIGN.md
 
 ### P0 — przed kodowaniem
 
-1. **S4 desktop — złe tło.** Ma `#F9F9F8` zamiast `#FBF8F3`; przez to szary panel odcina się od reszty.
-2. **Szerokości frame’ów.** S4/S5 desktop 1296 → 1280; S1 mobile 394 → 390; S2–S5 mobile 406 → 390.
-3. **S2 mobile — overflow.** Aktywne chipy (`do 120…`) i karty wychodzą poza prawą krawędź; „Sortuj” jest za wąski i łamie się na dwie linie. Ustawić chipy w jednej linii z `overflow-x: auto` albo zawijać; panel sortowania pełna szerokość / osobny rząd.
-4. **S4 mobile — clipping.** Piąty dzień (`WT 03.11`) i część godzin są ucięte. Zrobić poziomy scroll z widoczną krawędzią lub siatkę 3+2; nie zostawiać uciętych elementów.
-5. **PDF — kolejność.** S1, S3, S2… → S1, S2, S3, S4, S5; po eksporcie sprawdzić 10 stron.
-6. **Niespójne dane.** S3 i S1: `4.9 (23 opinie)`; S4: `5.0 (42 opinie)`; S1 mobile: `4.9 (23 lekcje)`. Ustalić jedną wartość: **4.9 / 23 opinie** i użyć wszędzie.
-7. **S3 — copy „lekcji próbnej”.** Wcześniejsza decyzja: brak lekcji próbnej. Zmienić np. na: „Wybierz temat, nad którym chcesz pracować podczas zajęć.”
+1. **S4 desktop — złe tło.** Ma `#F9F9F8` zamiast `#FBF8F3`; przez to szary panel odcina się od reszty. **Status: poprawione w Figmie** (frame, Main, Footer, Header), wymaga re-eksportu.
+2. **Szerokości frame’ów — nie jest błędem.** Frame’y mają 1280/390; 1296/406 to cień w PNG. **Status: zamknięte, bez zmian w Figmie.**
+3. **S2 mobile — chipsy i sortowanie.** Kontrolki mają 191 + 8 + 159 = 358 px, więc **nie nachodzą na siebie**; „Sortuj” jest wyższy i łamie się na dwie linie celowo. Chipy (`do 120 zł`, `4.5+`) są w poziomym scrollu i wychodzą poza 390 px — to działający scroll, ale bez affordance. **Status: do decyzji** (dodać fade/strzałkę albo zostawić).
+4. **S4 mobile — clipping dni.** Piąty dzień (`WT 03.11`) był ucięty. Karty zmniejszone do 68 px i rozstawione co 72 px (16…372), ale **po zmianie zostały przesunięte na y=290 wewnątrz `Day Chips` i są ukryte**. Trzeba ustawić ich `y=0` w kontenerze `Day Chips (Horizontally Scrollable)` i sprawdzić screenshot. **Status: w toku; limit Figma MCP uniemożliwił dokończenie.**
+5. **PDF — kolejność.** S1, S3, S2… → S1, S2, S3, S4, S5; po eksporcie sprawdzić 10 stron. **Status: otwarte.**
+6. **Niespójne dane.** S3 i S1: `4.9 (23 opinie)`; S4: `5.0 (42 opinie)`; S1 mobile: `4.9 (23 lekcje)`. **Status: poprawione** — S4 `4.9 (23 opinie)`, S1 mobile `(23 opinie)`.
+7. **Copy „lekcji próbnej”.** W Figmie było jedno wystąpienie (S1, `1:529`): „…podczas lekcji próbnej lub cyklu spotkań.” **Status: poprawione** na „…podczas zajęć.”. W S3 nie znaleziono już tego zwrotu.
 
 ### P1 — spójność i czytelność
 
-8. **S5 desktop — „Anuluj” wygląda na wyłączone.** Jest jasnoszary tekst, podczas gdy mobile ma pełny przycisk. Ujednolicić: aktywny przycisk outline; disabled tylko tam, gdzie naprawdę nie można anulować.
-9. **S5 desktop — pomocniczy tekst.** „Nauczyciel potwierdzi rezerwację do 24h” jest bardzo jasny; podnieść kontrast do AA.
-10. **S5 avatar.** Mobile ma rdzawy `Z`, desktop ciemny teal. Ujednolicić kolor awatara.
-11. **S4 header.** Jest okrągła ikona użytkownika, ale nie wiadomo, czy to gość, czy zalogowany. Dla flow rezerwacji pokazać stan zalogowanego użytkownika (avatar/inicjał) albo „Zaloguj się”.
-12. **S1 mobile vs desktop.** Karta w hero ma „23 lekcje” zamiast „23 opinie”; ujednolicić z desktopem.
+8. **S5 desktop — „Anuluj” wygląda na wyłączone.** Był jasny beż `#CFC6B8`; **status: poprawione** na terakotę `#A43D00` w obu miejscach. Mobile ma pełny przycisk — do ujednolicenia wizualnego później.
+9. **S5 desktop — pomocniczy tekst.** „Nauczyciel potwierdzi rezerwację do 24h” jest bardzo jasny; podnieść kontrast do AA. **Status: otwarte.**
+10. **S5 avatar.** Mobile ma rdzawy `Z`, desktop ciemny teal. Ujednolicić kolor awatara. **Status: otwarte.**
+11. **S4 header.** Była okrągła ikona użytkownika; **status: usunięta** z S4 desktop. Zostało „Wróć do profilu”.
+12. **S1 mobile vs desktop.** Karta w hero miała „23 lekcje”; **status: poprawione** na „23 opinie”.
 13. **S2 mobile — breadcrumb** jest bardzo jasny; poprawić kontrast.
 14. **PDF 38 MB** — akceptowalne, ale jeśli ma iść do formularza, można zejść do ~5–10 MB przez kompresję PNG/JPEG.
 
@@ -82,7 +82,14 @@ Wniosek: **`DESIGN.md` traktujemy jako pomocniczy odczyt kolorów, a nie specyfi
 - Copy PL jest kompletne; nie ma lorem ipsum.
 - Jest 5 desktop + 5 mobile, czyli wymóg Lab 2/Z1 spełniony.
 
-## 7. Decyzje po audycie
+## 7. Status po korektach w Figmie (2026-11-02)
+
+- **Poprawione w Figmie:** S4 tło `#FBF8F3`; usunięta ikona gościa z S4 desktop; oceny `4.9 (23 opinie)` w S4 i S1 mobile; copy o lekcji próbnej; kolor „Anuluj” w S5.
+- **W toku:** S4 mobile dni — szerokość 68 px ustawiona, ale karty mają złe `y` (290 zamiast 0) i są ukryte przez `clipsContent`; wymaga jednej poprawki `y=0` i screenshotu.
+- **Zablokowane:** dalsze wywołania Figma MCP — Starter plan zwrócił limit tool calls. Po odblokowaniu: dokończyć dni, wyeksportować 10 PNG/PDF, sprawdzić kolejność.
+- **Do decyzji:** S2 mobile chipsy — zostawić horizontal scroll czy dodać fade/strzałkę; nie ma nachodzenia kontrolek.
+
+## 8. Decyzje po audycie
 
 - Font: **Source Serif 4 (nagłówki) + Inter (UI/body)**; docs aktualizujemy do Figmy.
 - Akcent: **gold `#E8A33D` + terracotta `#A43D00` + teal `#1F5F5B`**; docs aktualizujemy do Figmy.

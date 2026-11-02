@@ -259,8 +259,8 @@ Dodatki pod kryteria:
 - [x] Uporządkować `docs/prototype/`: historyczne pliki w `archive/`.
 - [x] S6/S7: **oba minimalne, ale funkcjonalne**; różnice w `02-panele-s6-s7.md`.
 - [x] Deploy: **Azure**; bez publicznego URL kryterium 36 = 0.
-- [ ] Commitować `docs/` na branchu `docs/prototype` (nie mieszać z kodem).
-- [ ] Przenieść surowe screeny/PDF z parent folderu do `design/` poza repo.
+- [x] Commitować `docs/` na branchu `docs/project-plan` (nie mieszać z kodem).
+- [x] Uporządkować surowe screeny/PDF: `wdpai/figma_export/` = finalne źródło, `wdpai/archive/` = historia; repo zawiera tylko `docs/`.
 
 ### P1 — Lab 3: CSS i responsywność
 
