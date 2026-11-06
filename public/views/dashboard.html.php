@@ -5,7 +5,10 @@
 
     <?php $navVariant = 'app'; require __DIR__ . '/partials/nav.html.php'; ?>
 
-    <p class="avatar" aria-label="Konto Zosi">Z</p>
+    <div class="site-header__actions">
+        <?php require __DIR__ . '/partials/theme-toggle.html.php'; ?>
+        <p class="avatar" aria-label="Konto Zosi">Z</p>
+    </div>
 </header>
 
 <main class="dashboard-page">
