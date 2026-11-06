@@ -58,6 +58,7 @@
 
         document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
             button.addEventListener('click', () => {
+                window.alert('Witaj');
                 applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
             });
         });
