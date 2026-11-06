@@ -80,6 +80,35 @@
     --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+/* Motyw ciemny — te same role, inne wartości. */
+[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-ink: #f5f1e8;
+    --color-ink-muted: #b8b1a5;
+    --color-paper: #0d141f;
+    --color-surface: #172131;
+    --color-surface-alt: #1d293a;
+    --color-surface-muted: #243247;
+    --color-primary: #6fc7bd;
+    --color-primary-hover: #8ad8ce;
+    --color-primary-soft: #143833;
+    --color-accent: #f2b75c;
+    --color-accent-soft: #3a2a17;
+    --color-terracotta: #f08a63;
+    --color-peach: #4a2a22;
+    --color-border: #304054;
+    --color-border-strong: #4a5d75;
+    --color-success: #6fd3a2;
+    --color-danger: #ff8a80;
+    --color-warning: #f2b75c;
+    --color-focus: #8ab8ff;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
 /* --------------------------------------------------------------------------
    2. Reset i podstawy
    -------------------------------------------------------------------------- */
@@ -456,6 +485,50 @@ input[type="checkbox"] {
     min-height: 2.5rem;
     padding: 0.55rem 0.9rem;
     font-size: var(--text-sm);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    background: var(--color-surface);
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-soft);
+}
+
+.theme-toggle__icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.theme-toggle__icon--sun {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle__icon--moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle__icon--sun {
+    display: block;
 }
 
 .site-header--minimal > nav,
@@ -1942,7 +2015,47 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
 }
 
 /* --------------------------------------------------------------------------
-   19. Ograniczenie animacji
+   19. Motyw ciemny — korekty komponentów z twardymi kolorami
+   -------------------------------------------------------------------------- */
+
+[data-theme="dark"] .site-header {
+    background: rgba(13, 20, 31, 0.92);
+}
+
+[data-theme="dark"] .hero::before {
+    background-image: linear-gradient(rgba(245, 241, 232, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 241, 232, 0.045) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .tutor-cta {
+    color: #f5f1e8;
+    background: #080f18;
+}
+
+[data-theme="dark"] .tutor-cta h2 {
+    color: #f5f1e8;
+}
+
+[data-theme="dark"] .tutor-cta p {
+    color: rgba(245, 241, 232, 0.74);
+}
+
+[data-theme="dark"] .tutor-cta .button--primary {
+    color: #14213d;
+}
+
+[data-theme="dark"] .tutor-cta .button--primary:hover {
+    border-color: #f7c57a;
+    color: #14213d;
+    background: #f7c57a;
+}
+
+[data-theme="dark"] .tutor-cta a:not(.button) {
+    color: #f5f1e8;
+}
+
+/* --------------------------------------------------------------------------
+   20. Ograniczenie animacji
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {

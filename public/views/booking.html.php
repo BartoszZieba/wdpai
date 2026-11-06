@@ -3,6 +3,9 @@
 <header class="site-header site-header--minimal">
     <a class="site-logo" href="/">MaturaKorki</a>
     <?php $navVariant = 'minimal'; require __DIR__ . '/partials/nav.html.php'; ?>
+    <div class="site-header__actions">
+        <?php require __DIR__ . '/partials/theme-toggle.html.php'; ?>
+    </div>
 </header>
 
 <main class="booking-page">

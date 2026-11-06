@@ -5,7 +5,7 @@
 MaturaKorki — aplikacja internetowa dla maturzystów szukających korepetytora z matematyki.
 Umożliwia filtrowanie profili, sprawdzanie opinii, rezerwację terminu i przeglądanie lekcji w panelu ucznia.
 
-To projekt zaliczeniowy WDPAI. Obecny etap: routing MVC, semantyczne widoki HTML i dane demonstracyjne. Bez CSS, bazy danych i logowania — te elementy wchodzą w kolejnych laboratoriach.
+To projekt zaliczeniowy WDPAI. Obecny etap: routing MVC, semantyczne widoki HTML, responsywny CSS i przełącznik motywu light/dark. Bez bazy danych i logowania — te elementy wchodzą w kolejnych laboratoriach.
 
 ## Architektura
 
@@ -36,6 +36,8 @@ public/index.php
 ├── docker-compose.yaml
 ├── docker/
 ├── public/
+│   ├── css/style.css
+│   ├── js/themes.js
 │   ├── index.php
 │   └── views/
 │       └── partials/
@@ -108,8 +110,8 @@ Oczekiwane: 200 dla istniejących tras, 404 dla `/tutors/999` i nieznanych adres
 
 ## Aktualny zakres
 
-- Brak CSS — stylowanie w Lab 3.
-- Brak bazy danych, auth i trwałej rezerwacji — kolejne laba.
+- CSS i motyw light/dark są gotowe; brak bazy danych, auth i trwałej rezerwacji — kolejne laba.
+- JavaScript jest na razie tylko w `public/js/themes.js` (motyw); brak Fetch API i walidacji formularzy.
 - Formularze są semantyczne, ale część działa tylko po stronie GET.
 - Dane korepetytorów są statyczne (`TutorCatalog`).
 - Ollama nie jest częścią aplikacji; pojawia się wyłącznie jako temat Lab 4.
