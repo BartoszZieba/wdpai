@@ -4,7 +4,7 @@ Projekt zaliczeniowy z przedmiotu **Projektowanie Aplikacji Internetowych (WDPAI
 
 Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematyki. Pozwala filtrować profile po poziomie i dziale, sprawdzić opinie, zarezerwować termin i zarządzać lekcjami w panelu ucznia.
 
-> Etap Lab 3: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów oraz responsywny arkusz CSS (`public/css/style.css`). Baza danych i logowanie pojawią się w kolejnych laboratoriach.
+> Etap Lab 3: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, responsywny arkusz CSS (`public/css/style.css`) oraz przełącznik motywu light/dark (`public/js/themes.js`). Baza danych i logowanie pojawią się w kolejnych laboratoriach.
 
 ## Funkcje
 
@@ -15,6 +15,7 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Profil | Profil korepetytora, opinie i terminy (`/tutors/{id}`) |
 | Rezerwacja | Wybór terminu, notatka i podsumowanie (`/booking`) |
 | Panel ucznia | Najbliższe lekcje, historia i opinie (`/dashboard`) |
+| Motyw | Przełącznik light/dark w nagłówku, zapamiętywany w `localStorage` |
 | Obsługa 404 | Widok błędu dla nieznanych adresów |
 
 ## Tech stack
@@ -26,7 +27,7 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Baza danych | PostgreSQL 16 (planowana w kolejnych labach) |
 | Konteneryzacja | Docker Compose |
 | Autoloading | Composer (PSR-4) |
-| Stylowanie | CSS: custom properties, Flexbox, Grid, mobile-first |
+| Stylowanie | CSS: custom properties, Flexbox, Grid, mobile-first; motyw light/dark |
 | Narzędzia | Mailpit, pgAdmin, Ollama (profil `ai`) |
 
 ## Wymagania i szybki start
@@ -67,7 +68,8 @@ Aplikacja: http://localhost:8080
 ├── docker-compose.yaml
 ├── docker/                # obrazy nginx, PHP, PostgreSQL
 ├── public/                # jedyny publiczny katalog (front controller)
-│   ├── css/style.css      # tokeny, komponenty, widoki, RWD
+│   ├── css/style.css      # tokeny, komponenty, widoki, RWD, motyw ciemny
+│   ├── js/themes.js       # przełącznik light/dark + localStorage
 │   ├── index.php
 │   └── views/             # szablony .html.php + partials/
 └── src/
@@ -110,7 +112,11 @@ Wszystkie sekrety i parametry środowiska trzymamy w `.env` (ignorowanym przez G
 
 ## API i testy
 
-Na obecnym etapie brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, a stylowanie znajduje się w `public/css/style.css`.
+Na obecnym etapie brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, stylowanie znajduje się w `public/css/style.css`, a motyw obsługuje `public/js/themes.js`.
+
+## Motyw light/dark
+
+Domyślnie strona korzysta z ustawienia systemowego (`prefers-color-scheme`). Kliknięcie przycisku w nagłówku zapisuje wybór w `localStorage` pod kluczem `maturakorki-theme`; kolejne wejścia go respektują. Motyw jest ustawiany jeszcze w `<head>`, przed renderowaniem body, żeby uniknąć mignięcia jasnej strony.
 
 ## Autorzy
 

@@ -66,11 +66,11 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | 11 | Złożoność bazy | ❌ | brak tabel |
 | 12 | Eksport `.sql` | ❌ | brak |
 | 13 | PHP | ✅ | typy, `strict_types`, brak warningów |
-| 14 | JavaScript | ❌ | brak |
+| 14 | JavaScript | 🟡 | `themes.js`: DOM, eventy, `localStorage`; brak Fetch i walidacji formularzy |
 | 15 | Fetch API | ❌ | brak |
 | 16 | Design | 🟡 | CSS gotowy na `feature/lab3-css`; czeka na merge |
 | 17 | Responsywność | 🟡 | 360/390/768/1280 bez poziomego scrolla; czeka na merge |
-| 18 | Dark/light | ❌ | brak |
+| 18 | Dark/light | 🟡 | przełącznik + system + `localStorage`; do potwierdzenia w audycie WCAG |
 | 19 | WCAG | ❌ | brak raportu |
 | 20 | Logowanie | ❌ | brak |
 | 21 | Sesja | ❌ | brak |
@@ -99,7 +99,7 @@ repo/
 │   ├── css/style.css
 │   ├── js/
 │   │   ├── app.js
-│   │   ├── theme.js
+│   │   ├── themes.js
 │   │   ├── filters.js
 │   │   └── booking.js
 │   ├── uploads/avatars/       # albo poza public, z kontrolą dostępu
@@ -310,7 +310,7 @@ Kryteria: 8, 14, 15, 22, 23, 25, 26.
 - [ ] Panel admina: profile/opinie/działy.
 - [ ] `public/js/filters.js` — Fetch `/api/tutors`.
 - [ ] `public/js/booking.js` — sloty i walidacja.
-- [ ] `public/js/theme.js` — dark/light.
+- [x] `public/js/themes.js` — dark/light (wdrożone wcześniej, przed P4).
 
 ### P5 — Lab 5/12: theme, WCAG, security
 
