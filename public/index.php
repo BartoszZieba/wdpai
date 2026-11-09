@@ -7,24 +7,41 @@ use App\Controller\DashboardController;
 use App\Controller\DefaultController;
 use App\Controller\TutorController;
 use App\Routing;
+use App\Support\Session;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-$routing = new Routing();
+try {
+    Session::start();
 
-// Publiczne widoki projektu.
-$routing->get('/', DefaultController::class, 'index');
-$routing->get('/tutors', TutorController::class, 'index');
-$routing->get('/tutors/{id}', TutorController::class, 'show');
-$routing->get('/booking', BookingController::class, 'index');
-$routing->get('/dashboard', DashboardController::class, 'index');
+    $routing = new Routing();
 
-$routeFound = $routing->dispatch(
-    $_SERVER['REQUEST_METHOD'],
-    $_SERVER['REQUEST_URI'],
-);
+    // Publiczne widoki projektu.
+    $routing->get('/', DefaultController::class, 'index');
+    $routing->get('/tutors', TutorController::class, 'index');
+    $routing->get('/tutors/{id}', TutorController::class, 'show');
+    $routing->get('/booking', BookingController::class, 'index');
+    $routing->get('/booking/success', BookingController::class, 'success');
+    $routing->post('/booking', BookingController::class, 'store');
+    $routing->get('/dashboard', DashboardController::class, 'index');
 
-if (!$routeFound) {
-    http_response_code(404);
-    (new DefaultController())->notFound();
+    $routeFound = $routing->dispatch(
+        $_SERVER['REQUEST_METHOD'],
+        $_SERVER['REQUEST_URI'],
+    );
+
+    if (!$routeFound) {
+        http_response_code(404);
+        (new DefaultController())->notFound();
+    }
+} catch (\Throwable $exception) {
+    error_log(sprintf(
+        'MaturaKorki error: %s in %s:%d',
+        $exception->getMessage(),
+        $exception->getFile(),
+        $exception->getLine(),
+    ));
+
+    http_response_code(500);
+    (new DefaultController())->serverError();
 }

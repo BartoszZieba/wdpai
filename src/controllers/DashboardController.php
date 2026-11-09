@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Support\BookingStore;
+
 final class DashboardController extends AppController
 {
     public function index(): void
@@ -54,6 +56,40 @@ final class DashboardController extends AppController
      * @return array<int, array<string, mixed>>
      */
     private function lessons(): array
+    {
+        $lessons = [];
+
+        foreach (array_reverse(BookingStore::all()) as $booking) {
+            $slot = (string) ($booking['slot'] ?? '');
+            $date = $slot;
+            $time = '';
+
+            if (preg_match('/^(.*?)\s+(\d{2}:\d{2})$/', $slot, $matches) === 1) {
+                $date = $matches[1];
+                $time = $matches[2];
+            }
+
+            $lessons[] = [
+                'id' => (string) ($booking['id'] ?? 'BK'),
+                'date' => $date,
+                'time' => $time,
+                'tutor' => (string) ($booking['tutor_name'] ?? 'Korepetytor'),
+                'topic' => (string) ($booking['topic'] ?? 'Korepetycje z matematyki'),
+                'price' => (int) ($booking['price'] ?? 0),
+                'status' => 'pending',
+                'status_label' => 'Oczekuje na akceptację',
+                'can_cancel' => true,
+                'can_review' => false,
+            ];
+        }
+
+        return array_merge($lessons, $this->seedLessons());
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function seedLessons(): array
     {
         return [
             [

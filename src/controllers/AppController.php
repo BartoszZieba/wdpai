@@ -33,4 +33,13 @@ abstract class AppController
     {
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
+
+    /**
+     * Przekierowanie po zapisie (wzorzec Post/Redirect/Get).
+     */
+    protected function redirect(string $location, int $status = 303): never
+    {
+        header('Location: ' . $location, true, $status);
+        exit;
+    }
 }
