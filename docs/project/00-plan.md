@@ -266,15 +266,16 @@ Dodatki pod kryteria:
 
 Kryteria: 16, 17; Lab 3: 7 punktów.
 
-- [x] `public/css/style.css` z tokenami `:root` (min. 8 zmiennych).
+- [x] `public/css/tokens.css` z tokenami `:root` (min. 8 zmiennych) + `style.css`.
 - [x] Typografia, kolory, spacing, border, radius, shadows.
-- [x] Layout S1 na Flexbox/Grid.
-- [x] Breakpoint 768/1024 + test 360/390/768/1280.
-- [x] `:hover`, `:focus-visible`, `prefers-reduced-motion`.
+- [x] Layout S1 na Flexbox/Grid; karty na `flex-wrap`.
+- [x] Breakpointy 480/768/1024/1280 + test 320–1440.
+- [x] `:hover`, `:focus-visible`, `prefers-reduced-motion`, `@media print`.
+- [x] Wspólny `layout.html.php`, mobilny hamburger, nakładka statusu online, fixed back-to-top.
 - [x] Podłączyć CSS do wszystkich widoków.
 - [x] Małe commity: tokens → layout → components → responsive.
 
-Status: gotowe na branchu `feature/lab3-css`; commity `39a5804`, `d60ddc8`, `9130e2f`, `a98f014`, `6ff189b`. Szczegóły: `docs/project/03-lab3-css.md`. Merge dopiero po akceptacji użytkownika.
+Status: gotowe na branchu `feature/lab3-css` + `feature/lecture-css`; commity `39a5804`, `d60ddc8`, `9130e2f`, `a98f014`, `6ff189b`. Szczegóły: `docs/project/03-lab3-css.md`, `docs/project/05-lecture-css.md`. Merge dopiero po akceptacji użytkownika.
 
 ### P2 — Lab 6/7/8: PHP, PostgreSQL, OOP
 
