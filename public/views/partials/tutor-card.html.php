@@ -1,6 +1,6 @@
 <article class="tutor-card">
     <header class="tutor-card__header">
-        <p class="avatar" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
+        <p class="avatar avatar--online" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
         <div>
             <h3>
                 <a href="/tutors/<?= (int) $tutor['id'] ?>"><?= $this->e($tutor['name']) ?></a>

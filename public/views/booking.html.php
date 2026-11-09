@@ -1,13 +1,3 @@
-<?php require __DIR__ . '/partials/head.html.php'; ?>
-
-<header class="site-header site-header--minimal">
-    <a class="site-logo" href="/">MaturaKorki</a>
-    <?php $navVariant = 'minimal'; require __DIR__ . '/partials/nav.html.php'; ?>
-    <div class="site-header__actions">
-        <?php require __DIR__ . '/partials/theme-toggle.html.php'; ?>
-    </div>
-</header>
-
 <main class="booking-page">
     <ol class="stepper" aria-label="Kroki rezerwacji">
         <li aria-current="step">1. Termin</li>
@@ -16,7 +6,7 @@
     </ol>
 
     <section class="booking-summary" aria-labelledby="booking-tutor-title">
-        <p class="avatar" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
+        <p class="avatar avatar--online" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
         <div>
             <h1 id="booking-tutor-title"><?= $this->e($tutor['name']) ?></h1>
             <p>
@@ -85,9 +75,3 @@
         <p>Płatność po lekcji — bez opłat online.</p>
     </form>
 </main>
-
-<footer class="site-footer site-footer--minimal">
-    <p><small>&copy; 2026 MaturaKorki. Projekt studencki.</small></p>
-</footer>
-
-<?php require __DIR__ . '/partials/foot.html.php'; ?>

@@ -1,7 +1,13 @@
 <?php
 $variant = $navVariant ?? 'public';
+$collapsible = $variant === 'public';
 ?>
-<nav aria-label="<?= $variant === 'app' ? 'Nawigacja aplikacji' : ($variant === 'minimal' ? 'Nawigacja rezerwacji' : 'Nawigacja główna') ?>">
+<nav
+    class="site-nav"
+    id="site-nav"
+    aria-label="<?= $variant === 'app' ? 'Nawigacja aplikacji' : ($variant === 'minimal' ? 'Nawigacja rezerwacji' : 'Nawigacja główna') ?>"
+    <?= $collapsible ? 'data-collapsible="true"' : '' ?>
+>
     <?php if ($variant === 'app'): ?>
         <a href="/tutors">Szukaj</a>
         <a href="/dashboard" aria-current="page">Moje lekcje</a>

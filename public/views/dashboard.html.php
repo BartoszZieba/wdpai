@@ -1,16 +1,3 @@
-<?php require __DIR__ . '/partials/head.html.php'; ?>
-
-<header class="site-header site-header--app">
-    <a class="site-logo" href="/">MaturaKorki</a>
-
-    <?php $navVariant = 'app'; require __DIR__ . '/partials/nav.html.php'; ?>
-
-    <div class="site-header__actions">
-        <?php require __DIR__ . '/partials/theme-toggle.html.php'; ?>
-        <p class="avatar" aria-label="Konto Zosi">Z</p>
-    </div>
-</header>
-
 <main class="dashboard-page">
     <h1>Moje lekcje</h1>
     <p>Zarządzaj rezerwacjami i opiniami.</p>
@@ -100,14 +87,3 @@
         </section>
     <?php endif; ?>
 </main>
-
-<footer class="site-footer site-footer--minimal">
-    <nav aria-label="Pomoc">
-        <a href="#">Pomoc</a>
-        <a href="#">Regulamin</a>
-        <a href="#">Polityka prywatności</a>
-    </nav>
-    <p><small>&copy; 2026 MaturaKorki. Projekt studencki.</small></p>
-</footer>
-
-<?php require __DIR__ . '/partials/foot.html.php'; ?>

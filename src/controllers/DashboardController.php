@@ -36,6 +36,9 @@ final class DashboardController extends AppController
 
         $this->render('dashboard', [
             'pageTitle' => 'Moje lekcje — MaturaKorki',
+            'headerVariant' => 'app',
+            'footerVariant' => 'minimal',
+            'showBackToTop' => false,
             'tab' => $tab,
             'lessons' => $visibleLessons,
             'reviewLesson' => $reviews[0] ?? null,

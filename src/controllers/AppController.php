@@ -8,14 +8,25 @@ abstract class AppController
 {
     protected function render(string $template, array $variables = []): void
     {
-        $templatePath = dirname(__DIR__, 2) . '/public/views/' . $template . '.html.php';
+        $viewsPath = dirname(__DIR__, 2) . '/public/views/';
+        $templatePath = $viewsPath . $template . '.html.php';
+        $layoutPath = $viewsPath . 'layout.html.php';
 
         if (!is_file($templatePath)) {
             throw new \RuntimeException('View not found: ' . $template);
         }
 
+        if (!is_file($layoutPath)) {
+            throw new \RuntimeException('Layout not found.');
+        }
+
         extract($variables, EXTR_SKIP);
+
+        ob_start();
         require $templatePath;
+        $content = ob_get_clean();
+
+        require $layoutPath;
     }
 
     protected function e(string $value): string

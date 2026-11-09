@@ -1,6 +1,3 @@
-<?php require __DIR__ . '/partials/head.html.php'; ?>
-<?php require __DIR__ . '/partials/header.html.php'; ?>
-
 <?php $heroTutor = $featuredTutors[0] ?? null; ?>
 
 <main class="home">
@@ -34,7 +31,13 @@
                 </select>
             </div>
 
-            <button type="submit">Szukaj korepetytora</button>
+            <button type="submit">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="18" height="18">
+                    <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Szukaj korepetytora
+            </button>
         </form>
 
         <p class="hero__note">Online, w terminach, które Ci pasują.</p>
@@ -43,7 +46,7 @@
         <?php if ($heroTutor !== null): ?>
             <aside class="hero-card" aria-label="Przykładowy profil korepetytora">
                 <div class="hero-card__top">
-                    <p class="avatar" aria-hidden="true"><?= $this->e($heroTutor['initials']) ?></p>
+                    <p class="avatar avatar--online" aria-hidden="true"><?= $this->e($heroTutor['initials']) ?></p>
                     <div class="hero-card__identity">
                         <p class="hero-card__name">
                             <a href="/tutors/<?= (int) $heroTutor['id'] ?>"><?= $this->e($heroTutor['name']) ?></a>
@@ -151,6 +154,3 @@
         <a href="#jak-to-dziala">Zobacz, jak to działa</a>
     </section>
 </main>
-
-<?php require __DIR__ . '/partials/footer.html.php'; ?>
-<?php require __DIR__ . '/partials/foot.html.php'; ?>

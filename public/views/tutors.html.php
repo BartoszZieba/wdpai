@@ -1,6 +1,3 @@
-<?php require __DIR__ . '/partials/head.html.php'; ?>
-<?php require __DIR__ . '/partials/header.html.php'; ?>
-
 <main class="tutors-page">
     <nav aria-label="Ścieżka nawigacji">
         <ol>
@@ -88,6 +85,3 @@
         <p>Opinie tylko po zakończonej lekcji.</p>
     <?php endif; ?>
 </main>
-
-<?php require __DIR__ . '/partials/footer.html.php'; ?>
-<?php require __DIR__ . '/partials/foot.html.php'; ?>
