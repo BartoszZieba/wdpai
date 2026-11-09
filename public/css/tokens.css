@@ -39,7 +39,9 @@
     --color-border: #e4ded3;
     --color-border-strong: #cfc6b8;
     --color-success: #2e7d5b;
+    --color-success-soft: #e6f4ed;
     --color-danger: #b42318;
+    --color-danger-soft: #fdeceb;
     --color-warning: #b54708;
     --color-focus: #0b63ce;
 
@@ -96,7 +98,9 @@
     --color-border: #304054;
     --color-border-strong: #4a5d75;
     --color-success: #6fd3a2;
+    --color-success-soft: #12352a;
     --color-danger: #ff8a80;
+    --color-danger-soft: #3a1720;
     --color-warning: #f2b75c;
     --color-focus: #8ab8ff;
 

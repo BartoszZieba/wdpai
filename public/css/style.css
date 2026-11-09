@@ -1727,6 +1727,180 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
 }
 
 /* --------------------------------------------------------------------------
+   14b. Formularze — walidacja i potwierdzenie
+   -------------------------------------------------------------------------- */
+
+.form-alert {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-danger);
+    border-left-width: 4px;
+    border-radius: var(--radius-md);
+    background: var(--color-danger-soft);
+}
+
+.form-alert:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+.form-alert h2 {
+    margin-bottom: var(--space-2);
+    color: var(--color-danger);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+}
+
+.form-alert ul {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding-left: var(--space-4);
+}
+
+.form-alert li {
+    color: var(--color-ink);
+    font-size: var(--text-sm);
+}
+
+.field-error {
+    margin: 0;
+    color: var(--color-danger);
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+.field-hint {
+    margin: 0;
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: var(--color-danger);
+}
+
+.checkbox-field {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.checkbox-field input {
+    width: 1.15rem;
+    height: 1.15rem;
+    min-height: auto;
+    margin-top: 0.2rem;
+    accent-color: var(--color-primary);
+    flex: 0 0 auto;
+}
+
+.checkbox-field label {
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.checkbox-field + .field-error {
+    margin-left: calc(1.15rem + var(--space-2));
+}
+
+.success-card {
+    max-width: 42rem;
+    margin: var(--space-6) auto 0;
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.success-card__icon {
+    display: grid;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto var(--space-4);
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-success-soft);
+    color: var(--color-success);
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.success-card h1 {
+    margin-bottom: var(--space-2);
+}
+
+.success-card__lead {
+    max-width: 34rem;
+    margin: 0 auto var(--space-6);
+    color: var(--color-ink-muted);
+}
+
+.success-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-3);
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+}
+
+.success-details > div {
+    display: grid;
+    gap: 0.15rem;
+}
+
+.success-details dt {
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+}
+
+.success-details dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.success-note {
+    margin-bottom: var(--space-6);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-alt);
+    text-align: left;
+}
+
+.success-note h2 {
+    margin-bottom: var(--space-1);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+}
+
+.success-note p {
+    color: var(--color-ink-muted);
+    font-size: var(--text-sm);
+}
+
+.success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.success-card__note {
+    margin-top: var(--space-6);
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+}
+
+/* --------------------------------------------------------------------------
    15. 404
    -------------------------------------------------------------------------- */
 
