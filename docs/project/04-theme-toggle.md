@@ -8,7 +8,7 @@ Przełącznik motywu w nagłówku wszystkich widoków. Funkcja jest niezależna 
 
 - `public/js/themes.js` — logika motywu, `localStorage`, preferencja systemowa.
 - `public/views/partials/theme-toggle.html.php` — dostępny przycisk z ikonami księżyca i słońca.
-- `public/views/partials/head.html.php` — skrypt ładowany w `<head>` z `defer`.
+- `public/views/layout.html.php` — skrypt ładowany w `<head>` z `defer`.
 - `public/css/style.css` — tokeny `[data-theme="dark"]`, styl przycisku, korekty komponentów z twardymi kolorami.
 
 ## Zachowanie

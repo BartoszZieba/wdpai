@@ -1,6 +1,3 @@
-<?php require __DIR__ . '/partials/head.html.php'; ?>
-<?php require __DIR__ . '/partials/header.html.php'; ?>
-
 <main class="tutor-page">
     <nav aria-label="Ścieżka nawigacji">
         <ol>
@@ -11,7 +8,7 @@
 
     <article class="profile">
         <header class="profile__header">
-            <p class="avatar avatar--large" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
+            <p class="avatar avatar--large avatar--online" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
 
             <div>
                 <h1><?= $this->e($tutor['name']) ?></h1>
@@ -131,6 +128,3 @@
         </aside>
     </article>
 </main>
-
-<?php require __DIR__ . '/partials/footer.html.php'; ?>
-<?php require __DIR__ . '/partials/foot.html.php'; ?>

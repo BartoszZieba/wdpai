@@ -1,113 +1,8 @@
 /* ==========================================================================
    MaturaKorki — arkusz globalny
-   Kolejność: tokeny → reset → typografia → komponenty → widoki → RWD
+   Kolejność: reset → typografia → komponenty → widoki → RWD → druk.
+   Tokeny znajdują się w tokens.css.
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Tokeny projektu
-   -------------------------------------------------------------------------- */
-
-:root {
-    color-scheme: light;
-
-    /* Typografia */
-    --font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
-    --text-hero: clamp(2rem, 4vw, 3rem);
-    --text-section: clamp(1.75rem, 3vw, 2.25rem);
-    --text-lead: clamp(1.05rem, 1.6vw, 1.2rem);
-
-    /* Kolory — role, nie nazwy wyglądu */
-    --color-ink: #14213d;
-    --color-ink-muted: #5c6675;
-    --color-paper: #fbf8f3;
-    --color-surface: #ffffff;
-    --color-surface-alt: #f3eee6;
-    --color-surface-muted: #ede6da;
-    --color-primary: #1f5f5b;
-    --color-primary-hover: #174a47;
-    --color-primary-soft: #e3f0ed;
-    --color-accent: #e8a33d;
-    --color-accent-soft: #fbebd2;
-    --color-terracotta: #a43d00;
-    --color-peach: #ffdbcd;
-    --color-border: #e4ded3;
-    --color-border-strong: #cfc6b8;
-    --color-success: #2e7d5b;
-    --color-danger: #b42318;
-    --color-warning: #b54708;
-    --color-focus: #0b63ce;
-
-    /* Przestrzeń */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-5: 1.25rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-10: 2.5rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
-    --space-24: 6rem;
-
-    /* Promienie */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --radius-pill: 999px;
-
-    /* Cienie */
-    --shadow-sm: 0 1px 2px rgba(20, 33, 61, 0.06);
-    --shadow-md: 0 12px 32px rgba(20, 33, 61, 0.08);
-    --shadow-lg: 0 24px 64px rgba(20, 33, 61, 0.12);
-
-    /* Układ i ruch */
-    --container: 75rem;
-    --header-height: 4.5rem;
-    --transition: 180ms ease;
-    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-/* Motyw ciemny — te same role, inne wartości. */
-[data-theme="dark"] {
-    color-scheme: dark;
-
-    --color-ink: #f5f1e8;
-    --color-ink-muted: #b8b1a5;
-    --color-paper: #0d141f;
-    --color-surface: #172131;
-    --color-surface-alt: #1d293a;
-    --color-surface-muted: #243247;
-    --color-primary: #6fc7bd;
-    --color-primary-hover: #8ad8ce;
-    --color-primary-soft: #143833;
-    --color-accent: #f2b75c;
-    --color-accent-soft: #3a2a17;
-    --color-terracotta: #f08a63;
-    --color-peach: #4a2a22;
-    --color-border: #304054;
-    --color-border-strong: #4a5d75;
-    --color-success: #6fd3a2;
-    --color-danger: #ff8a80;
-    --color-warning: #f2b75c;
-    --color-focus: #8ab8ff;
-
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
-    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.45);
-}
 
 /* --------------------------------------------------------------------------
    2. Reset i podstawy
@@ -122,6 +17,17 @@
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 body {
@@ -487,6 +393,32 @@ input[type="checkbox"] {
     font-size: var(--text-sm);
 }
 
+.nav-toggle {
+    display: none;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    background: var(--color-surface);
+    cursor: pointer;
+}
+
+.nav-toggle:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-soft);
+}
+
+.nav-toggle svg {
+    pointer-events: none;
+}
+
 .theme-toggle {
     display: inline-flex;
     flex: 0 0 auto;
@@ -751,6 +683,7 @@ input[type="checkbox"] {
 }
 
 .avatar {
+    position: relative;
     display: grid;
     flex: 0 0 auto;
     width: 3rem;
@@ -768,6 +701,18 @@ input[type="checkbox"] {
     width: 5rem;
     height: 5rem;
     font-size: var(--text-xl);
+}
+
+.avatar--online::after {
+    position: absolute;
+    right: -0.05rem;
+    bottom: 0.1rem;
+    width: 0.65rem;
+    height: 0.65rem;
+    border: 2px solid var(--color-surface);
+    border-radius: 50%;
+    background: var(--color-success);
+    content: "";
 }
 
 .rating {
@@ -872,15 +817,22 @@ input[type="checkbox"] {
 }
 
 .tutor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--space-5);
     margin-top: var(--space-6);
 }
 
 .tutor-grid > li {
     display: flex;
+    flex: 1 1 min(100%, 22rem);
     min-width: 0;
+}
+
+@media (min-width: 64rem) {
+    .tutor-grid > li {
+        flex: 0 1 calc((100% - 2 * var(--space-5)) / 3);
+    }
 }
 
 .benefits ul {
@@ -1873,10 +1825,6 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
         gap: var(--space-6);
     }
 
-    .tutor-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
     .site-footer {
         grid-template-columns: 1.4fr repeat(3, 1fr);
     }
@@ -1904,10 +1852,78 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
 }
 
 /* --------------------------------------------------------------------------
+   17b. Pływający przycisk powrotu
+   -------------------------------------------------------------------------- */
+
+.back-to-top {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+}
+
+.back-to-top:hover {
+    border-color: var(--color-primary);
+    color: var(--color-surface);
+    background: var(--color-primary);
+}
+
+.back-to-top:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
    18. Responsywność — telefon
    -------------------------------------------------------------------------- */
 
 @media (max-width: 47.99rem) {
+    .js .site-header > .nav-toggle {
+        display: inline-flex;
+    }
+
+    .js .site-nav[data-collapsible="true"] {
+        display: none;
+    }
+
+    .js .site-nav[data-collapsible="true"].is-open {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        min-height: calc(100vh - 4.5rem);
+        min-height: calc(100dvh - 4.5rem);
+        padding: 0.6rem max(1rem, calc((100% - var(--container)) / 2)) 1rem;
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .js .site-nav[data-collapsible="true"].is-open a {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid var(--color-border);
+        white-space: normal;
+    }
+
+    .js .site-nav[data-collapsible="true"].is-open a:last-child {
+        border-bottom: 0;
+    }
+
     .site-header {
         flex-wrap: wrap;
         padding-block: 0.7rem;
@@ -1985,7 +2001,7 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
 }
 
 /* Tablet: nawigacja nie mieści się w jednej linii z akcjami. */
-@media (max-width: 56rem) {
+@media (max-width: 64rem) {
     .site-header {
         flex-wrap: wrap;
         padding-block: 0.7rem;
@@ -2070,5 +2086,171 @@ main > nav[aria-label="Ścieżka nawigacji"] a:hover {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 30rem) {
+    .hero {
+        padding: 1.25rem 1rem;
+    }
+
+    .hero-card,
+    .tutor-card {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 20rem) {
+    .site-header {
+        gap: 0.45rem 0.6rem;
+    }
+
+    .site-header__actions > a:first-child {
+        display: none;
+    }
+}
+
+body.nav-open {
+    overflow: hidden;
+}
+
+body.nav-open::before {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: rgba(20, 33, 61, 0.38);
+    content: "";
+}
+
+/* --------------------------------------------------------------------------
+   21. Druk — czytelny wydruk bez nawigacji i interakcji
+   -------------------------------------------------------------------------- */
+
+@media print {
+    @page {
+        margin: 1.5cm;
+    }
+
+    :root,
+    [data-theme="dark"] {
+        color-scheme: light;
+        --color-ink: #000000;
+        --color-ink-muted: #333333;
+        --color-paper: #ffffff;
+        --color-surface: #ffffff;
+        --color-surface-alt: #ffffff;
+        --color-border: #999999;
+        --color-border-strong: #666666;
+        --color-primary: #000000;
+        --color-primary-hover: #000000;
+        --color-primary-soft: #ffffff;
+        --color-accent: #000000;
+        --color-focus: #000000;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        background: #ffffff;
+        color: #000000;
+        font-size: 11pt;
+    }
+
+    body.nav-open::before,
+    .site-header,
+    .site-footer,
+    .back-to-top,
+    .theme-toggle,
+    .nav-toggle,
+    .button,
+    button,
+    form,
+    .filters,
+    .active-filters,
+    .stepper,
+    .tutor-cta,
+    .profile__action,
+    .booking-card .button,
+    .tutor-card > a,
+    .pagination,
+    .lesson-card__actions,
+    .dashboard-page > nav,
+    .hero__note,
+    .search-form {
+        display: none !important;
+    }
+
+    main,
+    .home,
+    .tutors-page,
+    .tutor-page,
+    .booking-page,
+    .dashboard-page {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hero {
+        padding: 0;
+        border: 0;
+        background: #ffffff;
+    }
+
+    .hero::before {
+        display: none;
+    }
+
+    .profile,
+    .tutor-grid,
+    .lesson-list,
+    .site-footer {
+        display: block;
+    }
+
+    .profile > *,
+    .tutor-grid > li,
+    .lesson-card,
+    .tutor-card,
+    .booking-summary,
+    .booking-card {
+        break-inside: avoid;
+    }
+
+    .tutor-grid > li {
+        margin-bottom: 1rem;
+    }
+
+    .tutor-card,
+    .lesson-card,
+    .booking-card,
+    .booking-summary {
+        border: 1px solid #999999;
+    }
+
+    .booking-card {
+        position: static;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    a,
+    strong,
+    span,
+    li,
+    dt,
+    dd {
+        color: #000000 !important;
+    }
+
+    a {
+        text-decoration: underline;
     }
 }

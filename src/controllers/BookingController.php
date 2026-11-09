@@ -27,6 +27,9 @@ final class BookingController extends AppController
 
         $this->render('booking', [
             'pageTitle' => 'Rezerwacja lekcji — MaturaKorki',
+            'headerVariant' => 'minimal',
+            'footerVariant' => 'minimal',
+            'showBackToTop' => false,
             'tutor' => $tutor,
             'selectedSlot' => $selectedSlot,
             'note' => $note,
