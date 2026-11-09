@@ -41,6 +41,8 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app
+    # Autoloader jest generowany przy starcie, więc świeży klon działa od razu.
+    command: sh -c "composer dump-autoload --no-interaction && exec php-fpm"
     depends_on:
       db:
         condition: service_healthy

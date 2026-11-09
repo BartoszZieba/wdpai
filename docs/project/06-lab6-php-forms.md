@@ -76,15 +76,15 @@ Wartości są przycinane, ale nie „naprawiane” po stronie serwera. Wszystkie
 ## 7. Testy wykonane
 
 ```bash
-/c/xampp/php/php.exe -l public/index.php
-/c/xampp/php/php.exe -l src/controllers/BookingController.php
-/c/xampp/php/php.exe -l src/Validation/BookingValidator.php
-/c/xampp/php/php.exe -l src/Models/Booking.php
+docker compose exec -T php php -l public/index.php
+docker compose exec -T php php -l src/controllers/BookingController.php
+docker compose exec -T php php -l src/Validation/BookingValidator.php
+docker compose exec -T php php -l src/Models/Booking.php
 ```
 
 Wynik: brak błędów składni.
 
-HTTP (PHP 8.2 built-in server, `127.0.0.1:8139`):
+HTTP (Docker Compose: nginx + PHP 8.3.36, `http://localhost:8080`):
 
 | Test | Wynik |
 |---|---|

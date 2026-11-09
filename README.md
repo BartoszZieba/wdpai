@@ -43,12 +43,11 @@ git clone https://github.com/BartoszZieba/wdpai.git
 cd wdpai
 cp .env.example .env
 docker compose up --build -d
-docker compose exec php composer dump-autoload
 ```
 
 Aplikacja: http://localhost:8080
 
-> `vendor/` nie jest zapisywany w repozytorium — autoloader generuje `composer dump-autoload` uruchomiony w kontenerze `php`.
+> `vendor/` nie jest zapisywany w repozytorium. Autoloader generuje się automatycznie przy starcie kontenera `php`; ręcznie uruchom `docker compose exec php composer dump-autoload` tylko po zmianie `composer.json`.
 >
 > Ollama ma profil `ai`, więc domyślne `docker compose up` nie pobiera jej ani nie uruchamia.
 
