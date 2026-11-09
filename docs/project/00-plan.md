@@ -61,7 +61,7 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | 6 | ERD Mermaid | ❌ | brak |
 | 7 | Git | ✅ | małe commity, branche, PR, merge commit |
 | 8 | Realizacja tematu | ❌ | widoki są statyczne, brak przepływu rezerwacji |
-| 9 | HTML | 🟡 | semantyka i partiale są; brak błędów formularzy i CSRF |
+| 9 | HTML | ✅ | semantyka, partiale, formularz POST, błędy pól i CSRF; brak auth |
 | 10 | PostgreSQL | ❌ | jest kontener, brak użycia w aplikacji |
 | 11 | Złożoność bazy | ❌ | brak tabel |
 | 12 | Eksport `.sql` | ❌ | brak |
@@ -79,7 +79,7 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | 24 | Wylogowanie | ❌ | brak |
 | 25 | Widok/trigger/funkcja/transakcja | ❌ | brak |
 | 26 | JOIN + FK | ❌ | brak |
-| 27 | Security Bingo | ❌ | brak |
+| 27 | Security Bingo | 🟡 | CSRF, escaping i sesja są; brak SQLi/auth/upload demo |
 | 28 | Brak replikacji | 🟡 | są partiale i `AppController::e()`, ale logika jest w kontrolerach |
 | 29 | Czystość kodu | 🟡 | prosty kod, ale brak warstw i testów |
 | 30 | Tłumaczenia | ❌ | brak |
@@ -281,6 +281,7 @@ Status: gotowe na branchu `feature/lab3-css` + `feature/lecture-css`; commity `3
 
 Kryteria: 5, 6, 10, 11, 12, 26, 28, 29.
 
+- [x] Lab 6: `POST /booking`, walidacja, CSRF, PRG, flash, 500 (dane w sesji, bez DB).
 - [ ] `database/schema.sql` + `seed.sql` + `docker/db/init`.
 - [ ] `src/Database.php` (PDO, DSN z `.env`).
 - [ ] `src/models/*`, `src/repositories/*`, `src/services/*`.
@@ -305,7 +306,7 @@ Kryteria: 20–24.
 Kryteria: 8, 14, 15, 22, 23, 25, 26.
 
 - [ ] `BookingService` + transakcja + statusy.
-- [ ] POST `/booking` z CSRF i walidacją.
+- [x] POST `/booking` z CSRF i walidacją (sesja; DB/transakcja w P2).
 - [ ] Panel ucznia z anulowaniem i opinią.
 - [ ] Panel korepetytora: akceptuj/odrzuć/zakończ, sloty.
 - [ ] Panel admina: profile/opinie/działy.
@@ -317,7 +318,7 @@ Kryteria: 8, 14, 15, 22, 23, 25, 26.
 
 Kryteria: 18, 19, 27.
 
-- [ ] `data-theme` + `localStorage` + `prefers-color-scheme` + skrypt w `<head>`.
+- [x] `data-theme` + `localStorage` + `prefers-color-scheme` + skrypt w `<head>`.
 - [ ] Kontrast AA, focus, target 44 px, labels.
 - [ ] Raport Lighthouse/axe/WAVE ze zrzutem i datą.
 - [ ] Security Bingo: hash, prepared statements, walidacja, escaping, CSRF, auth, upload.
