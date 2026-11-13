@@ -24,4 +24,12 @@ final class DefaultController extends AppController
             'pageTitle' => 'Nie znaleziono strony — MaturaKorki',
         ]);
     }
+
+    public function serverError(): void
+    {
+        http_response_code(500);
+        $this->render('server-error', [
+            'pageTitle' => 'Błąd serwera — MaturaKorki',
+        ]);
+    }
 }

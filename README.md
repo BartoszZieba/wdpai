@@ -4,7 +4,7 @@ Projekt zaliczeniowy z przedmiotu **Projektowanie Aplikacji Internetowych (WDPAI
 
 Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematyki. Pozwala filtrować profile po poziomie i dziale, sprawdzić opinie, zarezerwować termin i zarządzać lekcjami w panelu ucznia.
 
-> Etap Lab 3: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, wspólny layout, responsywny CSS (`public/css/tokens.css` + `public/css/style.css`), mobilna nawigacja, druk oraz przełącznik motywu light/dark (`public/js/themes.js`). Baza danych i logowanie pojawią się w kolejnych laboratoriach.
+> Etap Lab 6: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, wspólny layout, responsywny CSS (`public/css/tokens.css` + `public/css/style.css`), mobilna nawigacja, druk, przełącznik motywu light/dark (`public/js/themes.js`) oraz formularz rezerwacji POST z walidacją, CSRF i potwierdzeniem. Baza danych i logowanie pojawią się w kolejnych laboratoriach.
 
 ## Funkcje
 
@@ -13,12 +13,13 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Strona główna | Landing z wyszukiwarką i polecanymi korepetytorami (`/`) |
 | Wyniki | Lista profili + filtry poziomu i działu (`/tutors`) |
 | Profil | Profil korepetytora, opinie i terminy (`/tutors/{id}`) |
-| Rezerwacja | Wybór terminu, notatka i podsumowanie (`/booking`) |
+| Rezerwacja | Formularz POST: termin, dane, notatka, zgoda; walidacja i CSRF (`/booking`) |
+| Potwierdzenie | Numer zgłoszenia i status „Oczekuje na akceptację” (`/booking/success`) |
 | Panel ucznia | Najbliższe lekcje, historia i opinie (`/dashboard`) |
 | Motyw | Przełącznik light/dark w nagłówku, zapamiętywany w `localStorage` |
 | Nawigacja mobilna | Hamburger, panel pełnoekranowy, obsługa `Escape` i fokusu |
 | Druk | Osobny widok `@media print` bez nawigacji i formularzy |
-| Obsługa 404 | Widok błędu dla nieznanych adresów |
+| Obsługa błędów | 404 dla nieznanych adresów, 500 dla wyjątków aplikacji |
 
 ## Tech stack
 
@@ -42,12 +43,11 @@ git clone https://github.com/BartoszZieba/wdpai.git
 cd wdpai
 cp .env.example .env
 docker compose up --build -d
-docker compose exec php composer dump-autoload
 ```
 
 Aplikacja: http://localhost:8080
 
-> `vendor/` nie jest zapisywany w repozytorium — autoloader generuje `composer dump-autoload` uruchomiony w kontenerze `php`.
+> `vendor/` nie jest zapisywany w repozytorium. Autoloader generuje się automatycznie przy starcie kontenera `php`; ręcznie uruchom `docker compose exec php composer dump-autoload` tylko po zmianie `composer.json`.
 >
 > Ollama ma profil `ai`, więc domyślne `docker compose up` nie pobiera jej ani nie uruchamia.
 
@@ -59,8 +59,25 @@ Aplikacja: http://localhost:8080
 | GET | `/tutors` | `TutorController::index` |
 | GET | `/tutors/{id}` | `TutorController::show` |
 | GET | `/booking` | `BookingController::index` |
+| POST | `/booking` | `BookingController::store` |
+| GET | `/booking/success` | `BookingController::success` |
 | GET | `/dashboard` | `DashboardController::index` |
 | — | nieznany adres | `DefaultController::notFound` + HTTP 404 |
+
+## Rezerwacja (Lab 6)
+
+Formularz `POST /booking` jest walidowany po stronie serwera:
+
+- imię i nazwisko: 3–80 znaków,
+- e-mail: poprawny adres, maks. 120 znaków,
+- termin: musi pochodzić z listy slotów korepetytora,
+- notatka: maks. 300 znaków,
+- zgoda: wymagana,
+- CSRF: token z sesji sprawdzany przez `hash_equals`.
+
+Po sukcesie aplikacja robi przekierowanie `303` na `/booking/success` (wzorzec Post/Redirect/Get). Błędy i wpisane wartości są przenoszone przez sesję (flash), a nowa rezerwacja pojawia się w `/dashboard`.
+
+> Na tym etapie rezerwacje są zapisywane w sesji PHP, nie w PostgreSQL. Po wyczyszczeniu ciasteczek/restarcie sesji znikają. Model `App\Models\Booking` i `App\Support\BookingStore` są przygotowane do podmiany na repozytorium w Lab 7.
 
 ## Struktura projektu
 
@@ -80,7 +97,9 @@ Aplikacja: http://localhost:8080
 └── src/
     ├── Routing.php        # router (regex, parametry ścieżki)
     ├── controllers/       # AppController + kontrolery widoków
-    └── Support/           # TutorCatalog — dane demonstracyjne
+    ├── Models/            # Booking — readonly model rezerwacji
+    ├── Validation/        # BookingValidator — reguły formularza
+    └── Support/           # TutorCatalog, Session, BookingStore
 ```
 
 Przepływ żądania: `public/index.php` → `App\Routing` → kontroler → `AppController::render()` → widok → `layout.html.php`.
