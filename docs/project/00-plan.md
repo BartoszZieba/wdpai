@@ -294,8 +294,9 @@ Kryteria: 5, 6, 10, 11, 12, 26, 28, 29.
 
 Kryteria: 20–24.
 
+- [x] Formularze `/login` i `/register` + walidacja + CSRF (UI przed bazą).
 - [ ] Tabela `users`, `password_hash`, `password_verify`.
-- [ ] `SecurityController` login/register/logout.
+- [ ] `SecurityController` login/register/logout z prawdziwą sesją.
 - [ ] `session_regenerate_id(true)`, cookie HttpOnly/SameSite.
 - [ ] Role `student/tutor/admin`, middleware/guard.
 - [ ] Chronione trasy i 401/403.

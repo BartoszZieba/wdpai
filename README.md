@@ -4,7 +4,7 @@ Projekt zaliczeniowy z przedmiotu **Projektowanie Aplikacji Internetowych (WDPAI
 
 Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematyki. Pozwala filtrować profile po poziomie i dziale, sprawdzić opinie, zarezerwować termin i zarządzać lekcjami w panelu ucznia.
 
-> Etap Lab 6: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, wspólny layout, responsywny CSS (`public/css/tokens.css` + `public/css/style.css`), mobilna nawigacja, druk, przełącznik motywu light/dark (`public/js/themes.js`) oraz formularz rezerwacji POST z walidacją, CSRF i potwierdzeniem. Baza danych i logowanie pojawią się w kolejnych laboratoriach.
+> Etap Lab 6: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, wspólny layout, responsywny CSS (`public/css/tokens.css` + `public/css/style.css`), mobilna nawigacja, druk, przełącznik motywu light/dark (`public/js/themes.js`) oraz formularz rezerwacji POST z walidacją, CSRF i potwierdzeniem. Formularze logowania i rejestracji są gotowe wizualnie i walidacyjnie, ale prawdziwe konta pojawią się po podłączeniu PostgreSQL w Lab 9.
 
 ## Funkcje
 
@@ -16,6 +16,7 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Rezerwacja | Formularz POST: termin, dane, notatka, zgoda; walidacja i CSRF (`/booking`) |
 | Potwierdzenie | Numer zgłoszenia i status „Oczekuje na akceptację” (`/booking/success`) |
 | Panel ucznia | Najbliższe lekcje, historia i opinie (`/dashboard`) |
+| Konta | Formularze logowania (`/login`) i rejestracji (`/register`); walidacja i CSRF, bez zapisu do bazy |
 | Motyw | Przełącznik light/dark w nagłówku, zapamiętywany w `localStorage` |
 | Nawigacja mobilna | Hamburger, panel pełnoekranowy, obsługa `Escape` i fokusu |
 | Druk | Osobny widok `@media print` bez nawigacji i formularzy |
@@ -62,6 +63,10 @@ Aplikacja: http://localhost:8080
 | POST | `/booking` | `BookingController::store` |
 | GET | `/booking/success` | `BookingController::success` |
 | GET | `/dashboard` | `DashboardController::index` |
+| GET | `/login` | `SecurityController::login` |
+| POST | `/login` | `SecurityController::loginSubmit` |
+| GET | `/register` | `SecurityController::register` |
+| POST | `/register` | `SecurityController::registerSubmit` |
 | — | nieznany adres | `DefaultController::notFound` + HTTP 404 |
 
 ## Rezerwacja (Lab 6)
@@ -79,6 +84,12 @@ Po sukcesie aplikacja robi przekierowanie `303` na `/booking/success` (wzorzec P
 
 > Na tym etapie rezerwacje są zapisywane w sesji PHP, nie w PostgreSQL. Po wyczyszczeniu ciasteczek/restarcie sesji znikają. Model `App\Models\Booking` i `App\Support\BookingStore` są przygotowane do podmiany na repozytorium w Lab 7.
 
+## Konta (UI przed bazą)
+
+Strony `/login` i `/register` mają pełne formularze, walidację serwerową, CSRF i przekierowania PRG. Nie tworzą jeszcze kont i nie logują użytkownika — po poprawnym wysłaniu pokazują komunikat, że backend zostanie podłączony do PostgreSQL w Lab 7/9. Rejestracja pozwala wybrać rolę ucznia lub korepetytora (`/register?role=tutor`).
+
+Szczegóły: `docs/project/07-auth-ui.md`.
+
 ## Struktura projektu
 
 ```
@@ -93,12 +104,12 @@ Po sukcesie aplikacja robi przekierowanie `303` na `/booking/success` (wzorzec P
 │   ├── js/nav.js          # mobilne menu (hamburger, Escape, fokus)
 │   ├── favicon.svg
 │   ├── index.php
-│   └── views/             # layout.html.php + szablony + partials/
+│   └── views/             # layout.html.php + szablony + partials/ + auth/
 └── src/
     ├── Routing.php        # router (regex, parametry ścieżki)
-    ├── controllers/       # AppController + kontrolery widoków
+    ├── controllers/       # AppController + kontrolery widoków + SecurityController
     ├── Models/            # Booking — readonly model rezerwacji
-    ├── Validation/        # BookingValidator — reguły formularza
+    ├── Validation/        # BookingValidator, AuthValidator — reguły formularzy
     └── Support/           # TutorCatalog, Session, BookingStore
 ```
 
