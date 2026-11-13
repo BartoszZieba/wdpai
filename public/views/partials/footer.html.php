@@ -16,7 +16,7 @@
     <nav aria-label="Dla korepetytorów">
         <h3>Korepetytorzy</h3>
         <ul>
-            <li><a href="#">Zostań korepetytorem</a></li>
+            <li><a href="/register?role=tutor">Zostań korepetytorem</a></li>
             <li><a href="#">Zasady współpracy</a></li>
         </ul>
     </nav>

@@ -19,7 +19,7 @@ $navVariant = $headerVariant === 'app' ? 'app' : ($headerVariant === 'minimal' ?
 
     <div class="site-header__actions">
         <?php if ($isPublicHeader): ?>
-            <a href="#">Zaloguj się</a>
+            <a href="/login">Zaloguj się</a>
             <a class="button button--primary" href="/tutors">Znajdź korepetytora</a>
         <?php elseif ($headerVariant === 'app'): ?>
             <p class="avatar" aria-label="Konto Zosi">Z</p>
