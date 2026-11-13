@@ -5,7 +5,7 @@
 MaturaKorki — aplikacja internetowa dla maturzystów szukających korepetytora z matematyki.
 Umożliwia filtrowanie profili, sprawdzanie opinii, rezerwację terminu i przeglądanie lekcji w panelu ucznia.
 
-To projekt zaliczeniowy WDPAI. Obecny etap: routing MVC, semantyczne widoki HTML, responsywny CSS i przełącznik motywu light/dark. Bez bazy danych i logowania — te elementy wchodzą w kolejnych laboratoriach.
+To projekt zaliczeniowy WDPAI. Obecny etap: routing MVC, semantyczne widoki HTML, responsywny CSS, motyw light/dark, formularze logowania i rejestracji (UI przed bazą) oraz rezerwacja POST zapisywana w sesji. Brakuje PostgreSQL i prawdziwego logowania — te elementy wchodzą w kolejnych laboratoriach.
 
 ## Architektura
 
@@ -22,8 +22,11 @@ public/index.php
 - `public/index.php` — jedyny punkt wejścia i jedyne `require_once` (`vendor/autoload.php`).
 - `App\Routing` — dopasowanie metody HTTP i ścieżki, parametry `{id}`, uruchomienie akcji kontrolera.
 - `App\Controller\AppController` — klasa bazowa z `render()` i helperem `e()` do escapowania.
-- `App\Controller\*Controller` — przygotowują dane i wybierają widok.
-- `public/views/` — warstwa prezentacji, partiale i escaping.
+- `App\Controller\*Controller` — przygotowują dane i wybierają widok; `SecurityController` obsługuje formularze kont.
+- `App\Validation\*Validator` — reguły formularzy rezerwacji i kont.
+- `App\Models\Booking` + `App\Support\BookingStore` — model i tymczasowy store rezerwacji w sesji.
+- `App\Support\Session` — sesja, flash i CSRF.
+- `public/views/` — warstwa prezentacji, layout, partiale i escaping.
 - `App\Support\TutorCatalog` — statyczne dane demonstracyjne; w kolejnych labach zastąpi je repozytorium/PDO.
 
 ## Struktura katalogów
@@ -36,14 +39,19 @@ public/index.php
 ├── docker-compose.yaml
 ├── docker/
 ├── public/
+│   ├── css/tokens.css
 │   ├── css/style.css
+│   ├── js/nav.js
 │   ├── js/themes.js
 │   ├── index.php
 │   └── views/
+│       ├── auth/
 │       └── partials/
 └── src/
     ├── Routing.php
     ├── controllers/
+    ├── Models/
+    ├── Validation/
     └── Support/
 ```
 
@@ -55,7 +63,13 @@ public/index.php
 | GET | `/tutors` | `TutorController::index` |
 | GET | `/tutors/{id}` | `TutorController::show` |
 | GET | `/booking` | `BookingController::index` |
+| POST | `/booking` | `BookingController::store` |
+| GET | `/booking/success` | `BookingController::success` |
 | GET | `/dashboard` | `DashboardController::index` |
+| GET | `/login` | `SecurityController::login` |
+| POST | `/login` | `SecurityController::loginSubmit` |
+| GET | `/register` | `SecurityController::register` |
+| POST | `/register` | `SecurityController::registerSubmit` |
 | — | nieznany adres | `DefaultController::notFound` + 404 |
 
 ## Uruchamianie i weryfikacja
@@ -84,6 +98,8 @@ curl -I http://localhost:8080/tutors/1
 curl -I http://localhost:8080/tutors/999
 curl -I http://localhost:8080/booking?tutor=1
 curl -I http://localhost:8080/dashboard
+curl -I http://localhost:8080/login
+curl -I http://localhost:8080/register
 ```
 
 Oczekiwane: 200 dla istniejących tras, 404 dla `/tutors/999` i nieznanych adresów.
@@ -110,9 +126,10 @@ Oczekiwane: 200 dla istniejących tras, 404 dla `/tutors/999` i nieznanych adres
 
 ## Aktualny zakres
 
-- CSS i motyw light/dark są gotowe; brak bazy danych, auth i trwałej rezerwacji — kolejne laba.
-- JavaScript jest na razie tylko w `public/js/themes.js` (motyw); brak Fetch API i walidacji formularzy.
-- Formularze są semantyczne, ale część działa tylko po stronie GET.
+- CSS, layout, motyw i nawigacja mobilna są gotowe.
+- Formularze rezerwacji i kont mają walidację serwerową, CSRF oraz PRG; rezerwacje są w sesji, nie w PostgreSQL.
+- `/login` i `/register` to UI przed bazą: nie tworzą kont i nie ustawiają sesji zalogowania. Prawdziwe auth w Lab 9.
+- JavaScript: `public/js/themes.js` (motyw) i `public/js/nav.js` (menu mobilne); brak Fetch API.
 - Dane korepetytorów są statyczne (`TutorCatalog`).
 - Ollama nie jest częścią aplikacji; pojawia się wyłącznie jako temat Lab 4.
 
