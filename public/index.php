@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Controller\BookingController;
 use App\Controller\DashboardController;
 use App\Controller\DefaultController;
+use App\Controller\SecurityController;
 use App\Controller\TutorController;
 use App\Routing;
 use App\Support\Session;
@@ -24,6 +25,12 @@ try {
     $routing->get('/booking/success', BookingController::class, 'success');
     $routing->post('/booking', BookingController::class, 'store');
     $routing->get('/dashboard', DashboardController::class, 'index');
+
+    // Formularze kont — logika kont po podłączeniu bazy (Lab 7/9).
+    $routing->get('/login', SecurityController::class, 'login');
+    $routing->post('/login', SecurityController::class, 'loginSubmit');
+    $routing->get('/register', SecurityController::class, 'register');
+    $routing->post('/register', SecurityController::class, 'registerSubmit');
 
     $routeFound = $routing->dispatch(
         $_SERVER['REQUEST_METHOD'],

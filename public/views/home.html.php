@@ -150,7 +150,7 @@
     <section id="dla-korepetytorow" class="tutor-cta" aria-labelledby="tutor-cta-title">
         <h2 id="tutor-cta-title">Uczysz matematyki?</h2>
         <p>Dołącz jako korepetytor. Ustaw dostępność, przyjmuj zgłoszenia i buduj opinie.</p>
-        <a class="button button--primary" href="#">Załóż profil korepetytora</a>
+        <a class="button button--primary" href="/register?role=tutor">Załóż profil korepetytora</a>
         <a href="#jak-to-dziala">Zobacz, jak to działa</a>
     </section>
 </main>

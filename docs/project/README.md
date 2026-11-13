@@ -9,6 +9,7 @@
 | `04-theme-toggle.md` | Lab 5: light/dark, `localStorage`, system preference |
 | `05-lecture-css.md` | zmiany z wykładów CSS: layout, nawigacja, pozycjonowanie, druk |
 | `06-lab6-php-forms.md` | Lab 6: POST, walidacja, CSRF, PRG, błędy, potwierdzenie |
+| `07-auth-ui.md` | formularze logowania/rejestracji przed bazą; routing, walidacja, CSRF |
 | `requirements-lab15.txt` | kopia treści Lab 15 — 36 kryteriów oceny |
 
 ## Kolejność czytania
@@ -22,8 +23,6 @@
 - plan: gotowy,
 - audyt designu: gotowy,
 - decyzje: Source Serif 4 + Inter, 1280/390, Azure, testy po stabilizacji,
-- Lab 3 CSS: gotowy na branchu `feature/lab3-css`,
-- motyw: gotowy na branchu `feature/theme-toggle`,
-- wykłady CSS: gotowe na branchu `feature/lecture-css`,
-- Lab 6: formularz rezerwacji gotowy na branchu `feature/lab6-php-forms`,
-- następny krok: commit/push Lab 6, potem PostgreSQL (Lab 7) i auth (Lab 9).
+- Lab 3 CSS, motyw, wykłady CSS i Lab 6: w `main`,
+- formularze logowania/rejestracji: gotowe na branchu `feature/auth-ui` (UI, bez bazy),
+- następny krok: commit/push auth UI, potem PostgreSQL (Lab 7) i prawdziwe auth (Lab 9).
