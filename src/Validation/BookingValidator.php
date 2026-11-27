@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Validation;
 
+use App\Models\Tutor;
+
 /**
  * Walidacja danych formularza rezerwacji.
  *
@@ -29,10 +31,9 @@ final class BookingValidator
 
     /**
      * @param array{name: string, email: string, slot: string, note: string, consent: string} $data
-     * @param array<string, mixed> $tutor
      * @return array<string, string>
      */
-    public function validate(array $data, array $tutor): array
+    public function validate(array $data, Tutor $tutor): array
     {
         $errors = [];
 
@@ -48,7 +49,7 @@ final class BookingValidator
             $errors['email'] = 'Podaj poprawny adres e-mail.';
         }
 
-        $availableSlots = $tutor['slots'] ?? [];
+        $availableSlots = $tutor->slots;
 
         if ($data['slot'] === '') {
             $errors['slot'] = 'Wybierz termin lekcji.';

@@ -1,6 +1,7 @@
 <?php
 $variant = $navVariant ?? 'public';
 $collapsible = $variant === 'public';
+$backTutorId = isset($tutor) && is_object($tutor) && isset($tutor->id) ? (int) $tutor->id : 1;
 ?>
 <nav
     class="site-nav"
@@ -12,7 +13,7 @@ $collapsible = $variant === 'public';
         <a href="/tutors">Szukaj</a>
         <a href="/dashboard" aria-current="page">Moje lekcje</a>
     <?php elseif ($variant === 'minimal'): ?>
-        <a href="/tutors/<?= (int) ($tutor['id'] ?? 1) ?>">← Wróć do profilu</a>
+        <a href="/tutors/<?= (int) $backTutorId ?>">← Wróć do profilu</a>
     <?php else: ?>
         <a href="/#jak-to-dziala">Jak to działa</a>
         <a href="/tutors">Korepetytorzy</a>

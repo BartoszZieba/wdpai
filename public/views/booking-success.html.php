@@ -10,51 +10,51 @@
         <p class="eyebrow">Krok 3 z 3</p>
         <h1 id="success-title">Zgłoszenie wysłane</h1>
         <p class="success-card__lead">
-            Dziękujemy, <?= $this->e((string) $booking['name']) ?>. Rezerwacja trafiła do korepetytora.
+            Dziękujemy, <?= $this->e($booking->studentName) ?>. Rezerwacja trafiła do korepetytora.
         </p>
 
         <dl class="success-details">
             <div>
                 <dt>Numer zgłoszenia</dt>
-                <dd><?= $this->e((string) $booking['id']) ?></dd>
+                <dd><?= $this->e($booking->id) ?></dd>
             </div>
             <div>
                 <dt>Korepetytor</dt>
-                <dd><?= $this->e((string) $booking['tutor_name']) ?></dd>
+                <dd><?= $this->e($booking->tutorName) ?></dd>
             </div>
             <div>
                 <dt>Termin</dt>
-                <dd><?= $this->e((string) $booking['slot']) ?></dd>
+                <dd><?= $this->e($booking->slot) ?></dd>
             </div>
             <div>
                 <dt>Koszt</dt>
-                <dd><?= (int) $booking['price'] ?> zł</dd>
+                <dd><?= $booking->price ?> zł</dd>
             </div>
             <div>
                 <dt>Status</dt>
-                <dd><span class="status status--pending">Oczekuje na akceptację</span></dd>
+                <dd><span class="status status--<?= $this->e($booking->status) ?>"><?= $this->e($booking->statusLabel()) ?></span></dd>
             </div>
             <div>
                 <dt>Kontakt</dt>
-                <dd><?= $this->e((string) $booking['email']) ?></dd>
+                <dd><?= $this->e($booking->email) ?></dd>
             </div>
         </dl>
 
-        <?php if ((string) $booking['note'] !== ''): ?>
+        <?php if ($booking->note !== ''): ?>
             <div class="success-note">
                 <h2>Twoja notatka</h2>
-                <p><?= nl2br($this->e((string) $booking['note'])) ?></p>
+                <p><?= nl2br($this->e($booking->note)) ?></p>
             </div>
         <?php endif; ?>
 
         <div class="success-actions">
             <a class="button button--primary" href="/dashboard">Przejdź do moich lekcji</a>
-            <a class="button button--ghost" href="/tutors/<?= (int) $booking['tutor_id'] ?>">Wróć do profilu</a>
+            <a class="button button--ghost" href="/tutors/<?= $booking->tutorId ?>">Wróć do profilu</a>
         </div>
 
         <p class="success-card__note">
             Korepetytor potwierdzi termin. W wersji demonstracyjnej zgłoszenie jest zapisane
-            w sesji przeglądarki.
+            w bazie PostgreSQL.
         </p>
     </section>
 </main>

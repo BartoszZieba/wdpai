@@ -10,6 +10,13 @@ final class Routing
 {
     private array $routes = [];
 
+    /**
+     * @param callable(string): AppController|null $controllerFactory
+     */
+    public function __construct(private readonly mixed $controllerFactory = null)
+    {
+    }
+
     public function get(string $path, string $controller, string $action): void
     {
         $this->add('GET', $path, $controller, $action);
@@ -83,7 +90,12 @@ final class Routing
             );
 
             $controllerClass = $route['controller'];
-            $controller = new $controllerClass();
+
+            if (is_callable($this->controllerFactory)) {
+                $controller = ($this->controllerFactory)($controllerClass);
+            } else {
+                $controller = new $controllerClass();
+            }
 
             if (!$controller instanceof AppController) {
                 throw new \RuntimeException('Invalid controller');
