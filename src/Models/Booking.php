@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 /**
- * Rezerwacja w pamięci sesji.
- *
- * W Lab 7/modelu docelowym ten obiekt będzie odtwarzany z wiersza PostgreSQL.
+ * Encja rezerwacji odtwarzana z tabeli bookings.
  */
 final class Booking
 {
@@ -24,6 +22,67 @@ final class Booking
         public readonly string $status,
         public readonly string $createdAt,
     ) {
+    }
+
+    public function statusLabel(): string
+    {
+        return match ($this->status) {
+            'pending' => 'Oczekuje na akceptację',
+            'accepted' => 'Zaakceptowana',
+            'completed' => 'Zakończona',
+            'cancelled' => 'Anulowana',
+            'declined' => 'Odrzucona',
+            default => $this->status,
+        };
+    }
+
+    public function canCancel(): bool
+    {
+        return in_array($this->status, ['pending', 'accepted'], true);
+    }
+
+    public function canReview(): bool
+    {
+        return $this->status === 'completed';
+    }
+
+    public function slotDate(): string
+    {
+        if (preg_match('/^(.*?)\s+(\d{2}:\d{2})$/', $this->slot, $matches) === 1) {
+            return $matches[1];
+        }
+
+        return $this->slot;
+    }
+
+    public function slotTime(): string
+    {
+        if (preg_match('/^(.*?)\s+(\d{2}:\d{2})$/', $this->slot, $matches) === 1) {
+            return $matches[2];
+        }
+
+        return '';
+    }
+
+    /**
+     * Format oczekiwany przez widok panelu ucznia.
+     *
+     * @return array<string, int|string|bool>
+     */
+    public function toDashboardArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'date' => $this->slotDate(),
+            'time' => $this->slotTime(),
+            'tutor' => $this->tutorName,
+            'topic' => $this->topic,
+            'price' => $this->price,
+            'status' => $this->status,
+            'status_label' => $this->statusLabel(),
+            'can_cancel' => $this->canCancel(),
+            'can_review' => $this->canReview(),
+        ];
     }
 
     /**
