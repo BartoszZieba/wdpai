@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exceptions\SlotUnavailableException;
 use App\Models\Booking;
-use App\Support\BookingStore;
+use App\Repository\BookingRepository;
+use App\Repository\TutorRepository;
 use App\Support\Session;
-use App\Support\TutorCatalog;
 use App\Validation\BookingValidator;
 
 final class BookingController extends AppController
 {
+    public function __construct(
+        private readonly TutorRepository $tutors,
+        private readonly BookingRepository $bookings,
+    ) {
+    }
+
     public function index(): void
     {
         $tutorId = (int) ($_GET['tutor'] ?? 1);
-        $tutor = TutorCatalog::find($tutorId);
+        $tutor = $this->tutors->find($tutorId);
 
         if ($tutor === null) {
             $this->renderNotFound();
@@ -57,7 +64,7 @@ final class BookingController extends AppController
     public function store(): void
     {
         $tutorId = (int) ($_POST['tutor'] ?? 0);
-        $tutor = TutorCatalog::find($tutorId);
+        $tutor = $this->tutors->find($tutorId);
 
         if ($tutor === null) {
             $this->renderNotFound();
@@ -88,25 +95,35 @@ final class BookingController extends AppController
 
         $booking = new Booking(
             id: 'BK-' . strtoupper(bin2hex(random_bytes(3))),
-            tutorId: (int) $tutor['id'],
-            tutorName: (string) $tutor['name'],
-            topic: (string) ($tutor['topics'][0] ?? 'Korepetycje z matematyki'),
-            price: (int) $tutor['price'],
+            tutorId: $tutor->id,
+            tutorName: $tutor->name,
+            topic: $tutor->topics[0] ?? 'Korepetycje z matematyki',
+            price: $tutor->price,
             slot: $data['slot'],
             studentName: $data['name'],
             email: $data['email'],
             note: $data['note'],
             status: 'pending',
-            createdAt: date('Y-m-d H:i'),
+            createdAt: date('Y-m-d H:i:s'),
         );
 
-        BookingStore::add($booking);
+        try {
+            $this->bookings->save($booking);
+        } catch (SlotUnavailableException $exception) {
+            Session::flash('errors', ['slot' => $exception->getMessage()]);
+            Session::flash('old', $data);
+
+            $this->redirect('/booking?tutor=' . $tutorId);
+        }
+
+        Session::set('last_booking_id', $booking->id);
         $this->redirect('/booking/success');
     }
 
     public function success(): void
     {
-        $booking = BookingStore::latest();
+        $bookingId = Session::get('last_booking_id');
+        $booking = is_string($bookingId) ? $this->bookings->find($bookingId) : null;
 
         if ($booking === null) {
             $this->redirect('/tutors');

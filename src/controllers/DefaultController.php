@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Support\TutorCatalog;
+use App\Repository\TutorRepository;
 
 final class DefaultController extends AppController
 {
+    public function __construct(private readonly ?TutorRepository $tutors = null)
+    {
+    }
+
     public function index(): void
     {
+        $allTutors = $this->tutors?->findAll() ?? [];
+
         $this->render('home', [
             'pageTitle' => 'MaturaKorki — korepetycje z matematyki do matury',
-            'featuredTutors' => array_slice(TutorCatalog::all(), 0, 3),
+            'featuredTutors' => array_slice($allTutors, 0, 3),
             'levels' => ['Podstawa', 'Rozszerzenie'],
-            'topics' => TutorCatalog::topics(),
+            'topics' => $this->tutors?->topics() ?? [],
         ]);
     }
 

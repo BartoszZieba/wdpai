@@ -13,13 +13,13 @@ $csrfToken = isset($csrfToken) && is_string($csrfToken) ? $csrfToken : '';
     </ol>
 
     <section class="booking-summary" aria-labelledby="booking-tutor-title">
-        <p class="avatar avatar--online" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
+        <p class="avatar avatar--online" aria-hidden="true"><?= $this->e($tutor->initials) ?></p>
         <div>
-            <h1 id="booking-tutor-title"><?= $this->e($tutor['name']) ?></h1>
+            <h1 id="booking-tutor-title"><?= $this->e($tutor->name) ?></h1>
             <p>
-                <?= $this->e($tutor['level']) ?> ·
-                <?= $this->e($tutor['topics'][0] ?? '') ?> ·
-                <?= (int) $tutor['price'] ?> zł/h ·
+                <?= $this->e($tutor->level) ?> ·
+                <?= $this->e($tutor->topics[0] ?? '') ?> ·
+                <?= $tutor->price ?> zł/h ·
                 60 min · online
             </p>
         </div>
@@ -48,17 +48,17 @@ $csrfToken = isset($csrfToken) && is_string($csrfToken) ? $csrfToken : '';
         <?= $errors !== [] ? 'aria-describedby="form-errors"' : '' ?>
     >
         <input type="hidden" name="csrf_token" value="<?= $this->e($csrfToken) ?>">
-        <input type="hidden" name="tutor" value="<?= (int) $tutor['id'] ?>">
+        <input type="hidden" name="tutor" value="<?= $tutor->id ?>">
 
         <fieldset <?= isset($errors['slot']) ? 'aria-describedby="slot-error"' : '' ?>>
             <legend>Wybierz termin</legend>
             <p>Strefa czasowa: Europe/Warsaw</p>
 
-            <?php if ($tutor['slots'] === []): ?>
+            <?php if ($tutor->slots === []): ?>
                 <p>Brak wolnych terminów w tym tygodniu. Sprawdź później.</p>
             <?php else: ?>
                 <ul class="slot-list">
-                    <?php foreach ($tutor['slots'] as $index => $slot): ?>
+                    <?php foreach ($tutor->slots as $index => $slot): ?>
                         <li>
                             <input
                                 type="radio"
@@ -153,7 +153,7 @@ $csrfToken = isset($csrfToken) && is_string($csrfToken) ? $csrfToken : '';
             <dl>
                 <div>
                     <dt>Lekcja 60 min</dt>
-                    <dd><?= (int) $tutor['price'] ?> zł</dd>
+                    <dd><?= $tutor->price ?> zł</dd>
                 </div>
                 <div>
                     <dt>Płatność</dt>
@@ -166,7 +166,7 @@ $csrfToken = isset($csrfToken) && is_string($csrfToken) ? $csrfToken : '';
         <button
             class="button button--primary"
             type="submit"
-            <?= $tutor['slots'] === [] ? 'disabled' : '' ?>
+            <?= $tutor->slots === [] ? 'disabled' : '' ?>
         >
             Wyślij zgłoszenie
         </button>

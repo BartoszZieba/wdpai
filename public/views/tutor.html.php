@@ -2,34 +2,34 @@
     <nav aria-label="Ścieżka nawigacji">
         <ol>
             <li><a href="/tutors">Korepetytorzy</a></li>
-            <li aria-current="page"><?= $this->e($tutor['name']) ?></li>
+            <li aria-current="page"><?= $this->e($tutor->name) ?></li>
         </ol>
     </nav>
 
     <article class="profile">
         <header class="profile__header">
-            <p class="avatar avatar--large avatar--online" aria-hidden="true"><?= $this->e($tutor['initials']) ?></p>
+            <p class="avatar avatar--large avatar--online" aria-hidden="true"><?= $this->e($tutor->initials) ?></p>
 
             <div>
-                <h1><?= $this->e($tutor['name']) ?></h1>
-                <p><?= $this->e($tutor['headline']) ?></p>
+                <h1><?= $this->e($tutor->name) ?></h1>
+                <p><?= $this->e($tutor->headline) ?></p>
                 <p>
                     <span aria-hidden="true">★</span>
-                    <?= $this->e((string) $tutor['rating']) ?>
-                    (<?= $this->e($tutor['reviews_label']) ?>)
+                    <?= $this->e((string) $tutor->rating) ?>
+                    (<?= $this->e($tutor->reviewsLabel()) ?>)
                 </p>
-                <p><?= $this->e($tutor['level']) ?> · online</p>
+                <p><?= $this->e($tutor->level) ?> · online</p>
 
                 <ul class="tag-list">
-                    <?php foreach ($tutor['topics'] as $topic): ?>
+                    <?php foreach ($tutor->topics as $topic): ?>
                         <li><?= $this->e($topic) ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
 
             <div class="profile__action">
-                <p><strong><?= (int) $tutor['price'] ?> zł/h</strong></p>
-                <a class="button button--primary" href="/booking?tutor=<?= (int) $tutor['id'] ?>">
+                <p><strong><?= $tutor->price ?> zł/h</strong></p>
+                <a class="button button--primary" href="/booking?tutor=<?= $tutor->id ?>">
                     Zarezerwuj termin
                 </a>
             </div>
@@ -38,37 +38,37 @@
         <dl class="stats">
             <div>
                 <dt>Lekcje</dt>
-                <dd><?= (int) $tutor['lessons'] ?></dd>
+                <dd><?= $tutor->lessons ?></dd>
             </div>
             <div>
                 <dt>Ocena</dt>
-                <dd><?= $this->e((string) $tutor['rating']) ?></dd>
+                <dd><?= $this->e((string) $tutor->rating) ?></dd>
             </div>
             <div>
                 <dt>Opinie</dt>
-                <dd><?= (int) $tutor['reviews_count'] ?></dd>
+                <dd><?= $tutor->reviewsCount ?></dd>
             </div>
             <div>
                 <dt>Doświadczenie</dt>
-                <dd><?= (int) $tutor['experience'] ?> lat</dd>
+                <dd><?= $tutor->experience ?> lat</dd>
             </div>
         </dl>
 
         <section aria-labelledby="about-title">
             <h2 id="about-title">O korepetytorze</h2>
-            <p><?= $this->e($tutor['bio']) ?></p>
+            <p><?= $this->e($tutor->bio) ?></p>
         </section>
 
         <section aria-labelledby="education-title">
             <h2 id="education-title">Wykształcenie</h2>
-            <p><?= $this->e($tutor['education']) ?></p>
+            <p><?= $this->e($tutor->education) ?></p>
         </section>
 
         <section aria-labelledby="topics-title">
             <h2 id="topics-title">Działy</h2>
             <p>Wybierz temat, nad którym chcesz pracować podczas lekcji lub cyklu spotkań.</p>
             <ul class="tag-list">
-                <?php foreach ($tutor['topics'] as $topic): ?>
+                <?php foreach ($tutor->topics as $topic): ?>
                     <li><?= $this->e($topic) ?></li>
                 <?php endforeach; ?>
             </ul>
@@ -77,11 +77,11 @@
         <section aria-labelledby="reviews-title">
             <h2 id="reviews-title">Opinie</h2>
 
-            <?php if ($tutor['reviews'] === []): ?>
+            <?php if ($tutor->reviews === []): ?>
                 <p>Opinie pojawią się po zakończonej lekcji.</p>
             <?php else: ?>
                 <ul class="review-list">
-                    <?php foreach ($tutor['reviews'] as $review): ?>
+                    <?php foreach ($tutor->reviews as $review): ?>
                         <li>
                             <article>
                                 <header>
@@ -106,17 +106,17 @@
             <p>Wybierz dogodny termin lekcji:</p>
 
             <ul class="slot-list">
-                <?php foreach ($tutor['slots'] as $slot): ?>
+                <?php foreach ($tutor->slots as $slot): ?>
                     <li>
-                        <a href="/booking?<?= $this->e(http_build_query(['tutor' => $tutor['id'], 'slot' => $slot])) ?>">
+                        <a href="/booking?<?= $this->e(http_build_query(['tutor' => $tutor->id, 'slot' => $slot])) ?>">
                             <?= $this->e($slot) ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
             </ul>
 
-            <p><strong>Cena za lekcję: <?= (int) $tutor['price'] ?> zł</strong></p>
-            <a class="button button--primary" href="/booking?tutor=<?= (int) $tutor['id'] ?>">
+            <p><strong>Cena za lekcję: <?= $tutor->price ?> zł</strong></p>
+            <a class="button button--primary" href="/booking?tutor=<?= $tutor->id ?>">
                 Zarezerwuj termin
             </a>
 

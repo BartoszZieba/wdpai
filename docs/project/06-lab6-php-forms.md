@@ -31,7 +31,7 @@ Formularz rezerwacji przeszedł z `GET` (tylko podgląd) na pełny przepływ:
 | `src/controllers/BookingController.php` | odczyt formularza, zapis, walidacja, PRG, 404 |
 | `src/Validation/BookingValidator.php` | normalizacja i reguły pól |
 | `src/Models/Booking.php` | readonly model rezerwacji |
-| `src/Support/BookingStore.php` | tymczasowy magazyn w sesji |
+| `src/Support/BookingStore.php` | tymczasowy magazyn w sesji (zastąpiony przez DB w Lab 7/8) |
 | `src/Support/Session.php` | start sesji, flash, CSRF |
 | `src/controllers/AppController.php` | wspólny `redirect()` |
 | `src/controllers/DefaultController.php` | `serverError()` — 500 |
