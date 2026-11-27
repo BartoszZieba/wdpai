@@ -2,7 +2,7 @@
 
 Data: 2026-11-27  
 Zakres: Lab 7 (PostgreSQL, SQL, PDO) i Lab 8 (modele, repozytoria, CRUD, mapowanie wierszy na obiekty).  
-Branch: `feature/lab7-8-database` (na `feature/auth-ui`; auth UI nadal nie jest zmergowane).
+Branch: `feature/lab7-8-database` (na `feature/auth-ui`; auth UI jest już zmergowane w `main` przez PR #10/#11, więc PR Lab 7/8 pokazuje tylko zmiany bazy).
 
 ## 1. Co zostało zrobione
 
