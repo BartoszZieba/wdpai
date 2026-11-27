@@ -4,7 +4,7 @@ Projekt zaliczeniowy z przedmiotu **Projektowanie Aplikacji Internetowych (WDPAI
 
 Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematyki. Pozwala filtrować profile po poziomie i dziale, sprawdzić opinie, zarezerwować termin i zarządzać lekcjami w panelu ucznia.
 
-> Etap Lab 6: statyczny prototyp (PDF), semantyczne widoki HTML z danymi z kontrolerów, wspólny layout, responsywny CSS (`public/css/tokens.css` + `public/css/style.css`), mobilna nawigacja, druk, przełącznik motywu light/dark (`public/js/themes.js`) oraz formularz rezerwacji POST z walidacją, CSRF i potwierdzeniem. Formularze logowania i rejestracji są gotowe wizualnie i walidacyjnie, ale prawdziwe konta pojawią się po podłączeniu PostgreSQL w Lab 9.
+> Etap Lab 7/8: dane korepetytorów, terminów, opinii i rezerwacji są w PostgreSQL, a aplikacja korzysta z PDO, encji i repozytoriów. Formularz rezerwacji zapisuje dane w bazie w transakcji i blokuje wybrany termin. Formularze logowania i rejestracji są nadal UI-only — prawdziwe konta pojawią się w Lab 9.
 
 ## Funkcje
 
@@ -13,9 +13,9 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 | Strona główna | Landing z wyszukiwarką i polecanymi korepetytorami (`/`) |
 | Wyniki | Lista profili + filtry poziomu i działu (`/tutors`) |
 | Profil | Profil korepetytora, opinie i terminy (`/tutors/{id}`) |
-| Rezerwacja | Formularz POST: termin, dane, notatka, zgoda; walidacja i CSRF (`/booking`) |
+| Rezerwacja | Formularz POST: termin, dane, notatka, zgoda; walidacja, CSRF i zapis w transakcji (`/booking`) |
 | Potwierdzenie | Numer zgłoszenia i status „Oczekuje na akceptację” (`/booking/success`) |
-| Panel ucznia | Najbliższe lekcje, historia i opinie (`/dashboard`) |
+| Panel ucznia | Najbliższe lekcje, historia i opinie z bazy (`/dashboard`) |
 | Konta | Formularze logowania (`/login`) i rejestracji (`/register`); walidacja i CSRF, bez zapisu do bazy |
 | Motyw | Przełącznik light/dark w nagłówku, zapamiętywany w `localStorage` |
 | Nawigacja mobilna | Hamburger, panel pełnoekranowy, obsługa `Escape` i fokusu |
@@ -28,7 +28,7 @@ Aplikacja internetowa dla maturzystów, którzy szukają korepetytora z matematy
 |---|---|
 | Backend | PHP 8.3 (PHP-FPM), autorski routing MVC |
 | Serwer HTTP | nginx (FastCGI) |
-| Baza danych | PostgreSQL 16 (planowana w kolejnych labach) |
+| Baza danych | PostgreSQL 16, PDO, SQL (schemat + dane demo w `database/`) |
 | Konteneryzacja | Docker Compose |
 | Autoloading | Composer (PSR-4) |
 | Stylowanie | CSS: custom properties, Flexbox, Grid, mobile-first; motyw light/dark |
@@ -47,6 +47,13 @@ docker compose up --build -d
 ```
 
 Aplikacja: http://localhost:8080
+
+Baza inicjalizuje się automatycznie przy pierwszym uruchomieniu wolumenu (`database/001_schema.sql`, `database/002_seed.sql`). Aby odtworzyć bazę od zera:
+
+```bash
+docker compose down -v
+docker compose up -d --build
+```
 
 > `vendor/` nie jest zapisywany w repozytorium. Autoloader generuje się automatycznie przy starcie kontenera `php`; ręcznie uruchom `docker compose exec php composer dump-autoload` tylko po zmianie `composer.json`.
 >
@@ -82,11 +89,11 @@ Formularz `POST /booking` jest walidowany po stronie serwera:
 
 Po sukcesie aplikacja robi przekierowanie `303` na `/booking/success` (wzorzec Post/Redirect/Get). Błędy i wpisane wartości są przenoszone przez sesję (flash), a nowa rezerwacja pojawia się w `/dashboard`.
 
-> Na tym etapie rezerwacje są zapisywane w sesji PHP, nie w PostgreSQL. Po wyczyszczeniu ciasteczek/restarcie sesji znikają. Model `App\Models\Booking` i `App\Support\BookingStore` są przygotowane do podmiany na repozytorium w Lab 7.
+> Rezerwacja jest zapisywana w PostgreSQL przez `BookingRepository::save()` w transakcji. Wybrany termin jest blokowany przez `SELECT ... FOR UPDATE`; drugie równoległe żądanie na ten sam slot kończy się błędem „Ten termin został właśnie zajęty”.
 
 ## Konta (UI przed bazą)
 
-Strony `/login` i `/register` mają pełne formularze, walidację serwerową, CSRF i przekierowania PRG. Nie tworzą jeszcze kont i nie logują użytkownika — po poprawnym wysłaniu pokazują komunikat, że backend zostanie podłączony do PostgreSQL w Lab 7/9. Rejestracja pozwala wybrać rolę ucznia lub korepetytora (`/register?role=tutor`).
+Strony `/login` i `/register` mają pełne formularze, walidację serwerową, CSRF i przekierowania PRG. Nie tworzą jeszcze kont i nie logują użytkownika — po poprawnym wysłaniu pokazują komunikat, że backend kont zostanie podłączony w Lab 9. Rejestracja pozwala wybrać rolę ucznia lub korepetytora (`/register?role=tutor`).
 
 Szczegóły: `docs/project/07-auth-ui.md`.
 
@@ -96,6 +103,7 @@ Szczegóły: `docs/project/07-auth-ui.md`.
 .
 ├── composer.json          # autoloading PSR-4
 ├── docker-compose.yaml
+├── database/              # 001_schema.sql + 002_seed.sql (init PostgreSQL)
 ├── docker/                # obrazy nginx, PHP, PostgreSQL
 ├── public/                # jedyny publiczny katalog (front controller)
 │   ├── css/tokens.css     # zmienne: kolory, typografia, odstępy, promienie
@@ -108,14 +116,17 @@ Szczegóły: `docs/project/07-auth-ui.md`.
 └── src/
     ├── Routing.php        # router (regex, parametry ścieżki)
     ├── controllers/       # AppController + kontrolery widoków + SecurityController
-    ├── Models/            # Booking — readonly model rezerwacji
+    ├── Database.php       # połączenie PDO z PostgreSQL
+    ├── Models/            # Tutor, Booking — encje readonly
+    ├── Repository/        # TutorRepository, BookingRepository — SQL i mapowanie
+    ├── Exceptions/        # SlotUnavailableException
     ├── Validation/        # BookingValidator, AuthValidator — reguły formularzy
-    └── Support/           # TutorCatalog, Session, BookingStore
+    └── Support/           # Session (CSRF, flash); dane są już w DB
 ```
 
-Przepływ żądania: `public/index.php` → `App\Routing` → kontroler → `AppController::render()` → widok → `layout.html.php`.
+Przepływ żądania: `public/index.php` → `App\Routing` → kontroler → `AppController::render()` → widok → `layout.html.php`. Zależności (PDO i repozytoria) są składane w `public/index.php` i przekazywane kontrolerom przez fabrykę w routerze.
 
-Dane korepetytorów są na razie w `App\Support\TutorCatalog` (seed). W kolejnych labach zastąpi je repozytorium/PDO i PostgreSQL.
+Dane korepetytorów, terminów, opinii i rezerwacji pochodzą z PostgreSQL. Schemat i seed: `database/001_schema.sql` i `database/002_seed.sql`; szczegóły: `docs/project/08-lab7-8-database.md`.
 
 ## Konfiguracja
 
@@ -124,7 +135,8 @@ Wszystkie sekrety i parametry środowiska trzymamy w `.env` (ignorowanym przez G
 | Zmienna | Opis |
 |---|---|
 | `APP_PORT` | port aplikacji (domyślnie 8080) |
-| `POSTGRES_*` | dane bazy PostgreSQL |
+| `POSTGRES_*` | dane bazy PostgreSQL (kontener `db`) |
+| `DB_*` | wewnętrzne dane połączenia PHP → PostgreSQL; ustawiane w `docker-compose.yaml` |
 | `PGADMIN_*` | dane logowania pgAdmin |
 | `MAILPIT_PORT` | port panelu Mailpit |
 
@@ -147,7 +159,7 @@ Wszystkie sekrety i parametry środowiska trzymamy w `.env` (ignorowanym przez G
 
 ## API i testy
 
-Na obecnym etapie brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, stylowanie znajduje się w `public/css/tokens.css` i `public/css/style.css`, motyw obsługuje `public/js/themes.js`, a mobilne menu `public/js/nav.js`.
+Brak endpointów JSON i testów automatycznych — planowane w kolejnych laboratoriach. Widoki są renderowane serwerowo w PHP, stylowanie znajduje się w `public/css/tokens.css` i `public/css/style.css`, motyw obsługuje `public/js/themes.js`, a mobilne menu `public/js/nav.js`. Testy Lab 7/8: `docs/project/08-lab7-8-database.md`.
 
 ## Motyw light/dark
 

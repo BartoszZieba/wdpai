@@ -54,17 +54,17 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | # | Kryterium | Stan | Co brakuje |
 |---|---|---|---|
 | 1 | README | 🟡 | realne screeny, architektura, ERD, testy, deploy, dane demo |
-| 2 | Docker | 🟡 | aplikacja nie korzysta jeszcze z PostgreSQL; brak schematu |
+| 2 | Docker | ✅ | PostgreSQL + schemat + seed; aplikacja korzysta z DB |
 | 3 | Architektura | 🟡 | brak diagramu warstw i repozytoriów/serwisów |
 | 4 | Routing | ✅ | jest statyczna trasa, `{id}`, query, 404; dodać więcej metod i walidację 400 |
-| 5 | Obiektowy backend | 🟡 | są klasy, ale kontrolery trzymają dane; brak interfejsów/repo |
-| 6 | ERD Mermaid | ❌ | brak |
+| 5 | Obiektowy backend | 🟡 | encje i repozytoria są; brak serwisów/interfejsów dla części logiki |
+| 6 | ERD Mermaid | ✅ | diagram w `docs/project/08-lab7-8-database.md` |
 | 7 | Git | ✅ | małe commity, branche, PR, merge commit |
 | 8 | Realizacja tematu | ❌ | widoki są statyczne, brak przepływu rezerwacji |
 | 9 | HTML | ✅ | semantyka, partiale, formularz POST, błędy pól i CSRF; brak auth |
-| 10 | PostgreSQL | ❌ | jest kontener, brak użycia w aplikacji |
-| 11 | Złożoność bazy | ❌ | brak tabel |
-| 12 | Eksport `.sql` | ❌ | brak |
+| 10 | PostgreSQL | ✅ | PDO, prepared statements, transakcja rezerwacji |
+| 11 | Złożoność bazy | ✅ | 6 tabel, FK, CHECK, indeksy, trigger |
+| 12 | Eksport `.sql` | ✅ | `database/001_schema.sql` + `002_seed.sql` |
 | 13 | PHP | ✅ | typy, `strict_types`, brak warningów |
 | 14 | JavaScript | 🟡 | `themes.js`: DOM, eventy, `localStorage`; brak Fetch i walidacji formularzy |
 | 15 | Fetch API | ❌ | brak |
@@ -78,7 +78,7 @@ Legenda: ✅ działa, 🟡 częściowo, ❌ brak.
 | 23 | Role | ❌ | brak |
 | 24 | Wylogowanie | ❌ | brak |
 | 25 | Widok/trigger/funkcja/transakcja | ❌ | brak |
-| 26 | JOIN + FK | ❌ | brak |
+| 26 | JOIN + FK | ✅ | JOIN w `BookingRepository`, FK w schemacie |
 | 27 | Security Bingo | 🟡 | CSRF, escaping i sesja są; brak SQLi/auth/upload demo |
 | 28 | Brak replikacji | 🟡 | są partiale i `AppController::e()`, ale logika jest w kontrolerach |
 | 29 | Czystość kodu | 🟡 | prosty kod, ale brak warstw i testów |
@@ -275,20 +275,22 @@ Kryteria: 16, 17; Lab 3: 7 punktów.
 - [x] Podłączyć CSS do wszystkich widoków.
 - [x] Małe commity: tokens → layout → components → responsive.
 
-Status: gotowe na branchu `feature/lab3-css` + `feature/lecture-css`; commity `39a5804`, `d60ddc8`, `9130e2f`, `a98f014`, `6ff189b`. Szczegóły: `docs/project/03-lab3-css.md`, `docs/project/05-lecture-css.md`. Merge dopiero po akceptacji użytkownika.
+Status: gotowe i przeniesione do `main` przez PR #6–#8; szczegóły: `docs/project/03-lab3-css.md`, `docs/project/05-lecture-css.md`.
 
 ### P2 — Lab 6/7/8: PHP, PostgreSQL, OOP
+
+Status: Lab 7/8 zaimplementowane na branchu `feature/lab7-8-database`; szczegóły: `docs/project/08-lab7-8-database.md`.
 
 Kryteria: 5, 6, 10, 11, 12, 26, 28, 29.
 
 - [x] Lab 6: `POST /booking`, walidacja, CSRF, PRG, flash, 500 (dane w sesji, bez DB).
-- [ ] `database/schema.sql` + `seed.sql` + `docker/db/init`.
-- [ ] `src/Database.php` (PDO, DSN z `.env`).
-- [ ] `src/models/*`, `src/repositories/*`, `src/services/*`.
-- [ ] Podłączyć `/tutors`, `/tutors/{id}` do DB.
-- [ ] ERD Mermaid w README.
-- [ ] Eksport `.sql` z schematem i danymi demo.
-- [ ] Test czystej bazy: `docker compose down -v && up`.
+- [x] `database/001_schema.sql` + `002_seed.sql` + montowanie w `docker-compose.yaml`.
+- [x] `src/Database.php` (PDO, DSN z env).
+- [x] `src/Models/*`, `src/Repository/*`; pełny CRUD `TutorRepository`.
+- [x] Podłączyć `/`, `/tutors`, `/tutors/{id}`, `/booking`, `/dashboard` do DB.
+- [x] ERD Mermaid w `docs/project/08-lab7-8-database.md`.
+- [x] Eksport `.sql` z schematem i danymi demo.
+- [x] Test czystej bazy: `docker compose down -v && up` — init wykonany automatycznie.
 
 ### P3 — Lab 9: auth, sesja, role
 
@@ -307,7 +309,7 @@ Kryteria: 20–24.
 Kryteria: 8, 14, 15, 22, 23, 25, 26.
 
 - [ ] `BookingService` + transakcja + statusy.
-- [x] POST `/booking` z CSRF i walidacją (sesja; DB/transakcja w P2).
+- [x] POST `/booking` z CSRF, walidacją i transakcją DB (Lab 6 + Lab 7).
 - [ ] Panel ucznia z anulowaniem i opinią.
 - [ ] Panel korepetytora: akceptuj/odrzuć/zakończ, sloty.
 - [ ] Panel admina: profile/opinie/działy.

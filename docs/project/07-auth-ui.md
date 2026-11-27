@@ -2,7 +2,7 @@
 
 ## Status
 
-Gotowy jest **interfejs** logowania i rejestracji. To nie jest jeszcze działające uwierzytelnianie: nie ma tabeli `users`, hashy haseł ani sesji zalogowanego użytkownika. Formularze walidują dane i pokazują komunikat, że backend zostanie podłączony w Lab 7/9.
+Gotowy jest **interfejs** logowania i rejestracji. To nie jest jeszcze działające uwierzytelnianie: nie ma tabeli `users`, hashy haseł ani sesji zalogowanego użytkownika. Formularze walidują dane i pokazują komunikat, że backend kont zostanie podłączony w Lab 9. Baza PostgreSQL i repozytoria są już gotowe (Lab 7/8), ale nie ma jeszcze tabeli `users`.
 
 ## Routing
 
@@ -31,7 +31,7 @@ Walidacja:
 - e-mail wymagany, poprawny, maks. 120 znaków,
 - hasło wymagane.
 
-Po poprawnym wysłaniu pojawia się komunikat, że logowanie będzie aktywne po podłączeniu bazy. Nie jest ustawiana żadna flaga zalogowania.
+Po poprawnym wysłaniu pojawia się komunikat, że logowanie będzie aktywne po dodaniu tabeli `users` i sesji logowania w Lab 9. Nie jest ustawiana żadna flaga zalogowania.
 
 ## Rejestracja
 

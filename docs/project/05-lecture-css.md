@@ -55,7 +55,7 @@ Zamiast zewnętrznego Font Awesome użyto lekkich **inline SVG** (menu, słońce
 
 - Nie dodano logowania ani formularza e-mail — authentication pojawi się w kolejnym etapie; wzorce Flexbox/`100vh` z wykładu wykorzystano w istniejących widokach.
 - Nie dodano zewnętrznej biblioteki ikon ani frameworka CSS.
-- Nie zmieniano danych demonstracyjnych `TutorCatalog`.
+- Nie zmieniano danych demonstracyjnych; później przeniesione do PostgreSQL (Lab 7/8).
 
 ## Weryfikacja
 
