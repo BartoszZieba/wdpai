@@ -28,7 +28,7 @@ services:
       - pg-network
     volumes:
       - pg-data:/var/lib/postgresql/data
-      - ./docker/db:/docker-entrypoint-initdb.d
+      - ./database:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -43,6 +43,12 @@ services:
       - .:/app
     # Autoloader jest generowany przy starcie, więc świeży klon działa od razu.
     command: sh -c "composer dump-autoload --no-interaction && exec php-fpm"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
